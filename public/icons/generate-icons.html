@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Icons</title>
+</head>
+<body>
+    <h1>Icon Generation</h1>
+    <p>Open browser console and run this page to generate icons, then save them manually</p>
+    <canvas id="canvas16" width="16" height="16"></canvas>
+    <canvas id="canvas48" width="48" height="48"></canvas>
+    <canvas id="canvas128" width="128" height="128"></canvas>
+
+    <script>
+        function drawIcon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+
+            // Background
+            ctx.fillStyle = '#2563EB';
+            ctx.fillRect(0, 0, size, size);
+
+            // Draw simple chart icon
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(size * 0.2, size * 0.5, size * 0.15, size * 0.3);
+            ctx.fillRect(size * 0.4, size * 0.35, size * 0.15, size * 0.45);
+            ctx.fillRect(size * 0.6, size * 0.25, size * 0.15, size * 0.55);
+        }
+
+        drawIcon(document.getElementById('canvas16'), 16);
+        drawIcon(document.getElementById('canvas48'), 48);
+        drawIcon(document.getElementById('canvas128'), 128);
+
+        console.log('Icons drawn. Right-click each canvas and save as PNG:');
+        console.log('- canvas16 -> icon16.png');
+        console.log('- canvas48 -> icon48.png');
+        console.log('- canvas128 -> icon128.png');
+    </script>
+</body>
+</html>

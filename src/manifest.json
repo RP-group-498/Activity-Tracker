@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Behavior Tracker",
+  "version": "1.0.0",
+  "description": "Track browser behavior for procrastination analysis",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "idle",
+    "alarms",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "src/background/service-worker.ts",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/popup/popup.html"
+  },
+  "options_page": "src/options/options.html"
+}
