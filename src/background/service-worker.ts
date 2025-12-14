@@ -1,6 +1,17 @@
 import { Session, TabActivity } from '../types';
 import { StorageManager } from '../utils/storage';
-import { generateUUID, getDomainFromUrl, categorizeDomain, isSensitiveUrl, sanitizeUrl } from '../utils/helpers';
+import {
+  generateUUID,
+  getDomainFromUrl,
+  categorizeDomain,
+  getDetailedClassification,
+  isSensitiveUrl,
+  sanitizeUrl,
+} from '../utils/helpers';
+import {
+  initializeClassificationService,
+  getClassificationService,
+} from '../classification';
 
 class TabTracker {
   private currentSession: Session | null = null;
@@ -8,6 +19,15 @@ class TabTracker {
   private tabStartTimes: Map<number, number> = new Map();
 
   async initialize() {
+    // Initialize the classification service
+    try {
+      await initializeClassificationService();
+      console.log('Classification service initialized');
+    } catch (error) {
+      console.error('Failed to initialize classification service:', error);
+      // Continue without classification service - will use fallback
+    }
+
     // Load or create current session
     this.currentSession = await StorageManager.getCurrentSession();
     if (!this.currentSession) {
@@ -122,6 +142,9 @@ class TabTracker {
       );
 
       if (existingTabIndex === -1) {
+        // Get classification info
+        const detailedClassification = getDetailedClassification(domain, settings);
+
         // Create new tab activity
         const tabActivity: TabActivity = {
           url: sanitizeUrl(tab.url || ''),
@@ -138,6 +161,7 @@ class TabTracker {
             typing: false,
           },
           category: categorizeDomain(domain, settings),
+          classification: detailedClassification || undefined,
           tabId,
           windowId: tab.windowId,
         };
@@ -262,6 +286,61 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       } else if (message.action === 'updateSettings') {
         await StorageManager.setSettings(message.settings);
         sendResponse({ success: true });
+      }
+      // Classification-related actions
+      else if (message.action === 'classifyDomain') {
+        const service = getClassificationService();
+        if (service.isInitialized()) {
+          const classification = service.classify(message.domain);
+          sendResponse({ success: true, data: classification });
+        } else {
+          sendResponse({ success: false, error: 'Classification service not initialized' });
+        }
+      } else if (message.action === 'getClassificationStats') {
+        const service = getClassificationService();
+        if (service.isInitialized()) {
+          const metrics = service.getMetrics();
+          const cacheStats = service.getCacheStats();
+          const dbStats = service.getDatabaseStats();
+          sendResponse({
+            success: true,
+            data: { metrics, cacheStats, dbStats },
+          });
+        } else {
+          sendResponse({ success: false, error: 'Classification service not initialized' });
+        }
+      } else if (message.action === 'setUserOverride') {
+        const service = getClassificationService();
+        if (service.isInitialized()) {
+          service.setUserOverride(message.domain, message.category);
+          sendResponse({ success: true });
+        } else {
+          sendResponse({ success: false, error: 'Classification service not initialized' });
+        }
+      } else if (message.action === 'removeUserOverride') {
+        const service = getClassificationService();
+        if (service.isInitialized()) {
+          const removed = service.removeUserOverride(message.domain);
+          sendResponse({ success: true, data: { removed } });
+        } else {
+          sendResponse({ success: false, error: 'Classification service not initialized' });
+        }
+      } else if (message.action === 'exportUserOverrides') {
+        const service = getClassificationService();
+        if (service.isInitialized()) {
+          const overrides = service.exportUserOverrides();
+          sendResponse({ success: true, data: overrides });
+        } else {
+          sendResponse({ success: false, error: 'Classification service not initialized' });
+        }
+      } else if (message.action === 'importUserOverrides') {
+        const service = getClassificationService();
+        if (service.isInitialized()) {
+          await service.importUserOverrides(message.overrides);
+          sendResponse({ success: true });
+        } else {
+          sendResponse({ success: false, error: 'Classification service not initialized' });
+        }
       }
     } catch (error) {
       console.error('Error handling message:', error);

@@ -1,0 +1,694 @@
+{
+  "domains": [
+    {
+      "domain": "facebook.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["social-media"]
+    },
+    {
+      "domain": "fb.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["social-media"]
+    },
+    {
+      "domain": "messenger.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["social-media", "messaging"]
+    },
+    {
+      "domain": "instagram.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["social-media"]
+    },
+    {
+      "domain": "twitter.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["social-media"]
+    },
+    {
+      "domain": "x.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["social-media"]
+    },
+    {
+      "domain": "tiktok.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["social-media", "video"]
+    },
+    {
+      "domain": "snapchat.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["social-media"]
+    },
+    {
+      "domain": "pinterest.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["social-media"]
+    },
+    {
+      "domain": "tumblr.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["social-media", "blogging"]
+    },
+    {
+      "domain": "reddit.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["social-media", "forum"]
+    },
+    {
+      "domain": "old.reddit.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["social-media", "forum"]
+    },
+    {
+      "domain": "youtube.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["video", "entertainment"]
+    },
+    {
+      "domain": "youtu.be",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["video", "entertainment"]
+    },
+    {
+      "domain": "netflix.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "entertainment"]
+    },
+    {
+      "domain": "hulu.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "entertainment"]
+    },
+    {
+      "domain": "disneyplus.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "entertainment"]
+    },
+    {
+      "domain": "hbomax.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "entertainment"]
+    },
+    {
+      "domain": "max.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "entertainment"]
+    },
+    {
+      "domain": "primevideo.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "entertainment"]
+    },
+    {
+      "domain": "amazon.com/Prime-Video",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "entertainment"]
+    },
+    {
+      "domain": "peacocktv.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "entertainment"]
+    },
+    {
+      "domain": "paramountplus.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "entertainment"]
+    },
+    {
+      "domain": "appletv.apple.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "entertainment"]
+    },
+    {
+      "domain": "crunchyroll.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "anime"]
+    },
+    {
+      "domain": "funimation.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["streaming", "anime"]
+    },
+    {
+      "domain": "twitch.tv",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["streaming", "gaming"]
+    },
+    {
+      "domain": "kick.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["streaming", "gaming"]
+    },
+    {
+      "domain": "spotify.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["music", "entertainment"]
+    },
+    {
+      "domain": "open.spotify.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["music", "entertainment"]
+    },
+    {
+      "domain": "music.apple.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["music", "entertainment"]
+    },
+    {
+      "domain": "soundcloud.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["music", "entertainment"]
+    },
+    {
+      "domain": "pandora.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["music", "entertainment"]
+    },
+    {
+      "domain": "deezer.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["music", "entertainment"]
+    },
+    {
+      "domain": "tidal.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["music", "entertainment"]
+    },
+    {
+      "domain": "steam.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "steampowered.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "store.steampowered.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gaming", "shopping"]
+    },
+    {
+      "domain": "epicgames.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "store.epicgames.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gaming", "shopping"]
+    },
+    {
+      "domain": "gog.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "origin.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "ubisoft.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "blizzard.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "battle.net",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "roblox.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "minecraft.net",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "ea.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "playstation.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "xbox.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "nintendo.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["gaming"]
+    },
+    {
+      "domain": "ign.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["gaming", "news"]
+    },
+    {
+      "domain": "kotaku.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["gaming", "news"]
+    },
+    {
+      "domain": "gamespot.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["gaming", "news"]
+    },
+    {
+      "domain": "polygon.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["gaming", "news"]
+    },
+    {
+      "domain": "amazon.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["shopping"]
+    },
+    {
+      "domain": "ebay.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["shopping"]
+    },
+    {
+      "domain": "etsy.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["shopping"]
+    },
+    {
+      "domain": "walmart.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["shopping"]
+    },
+    {
+      "domain": "target.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["shopping"]
+    },
+    {
+      "domain": "bestbuy.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["shopping", "tech"]
+    },
+    {
+      "domain": "newegg.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["shopping", "tech"]
+    },
+    {
+      "domain": "aliexpress.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["shopping"]
+    },
+    {
+      "domain": "wish.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["shopping"]
+    },
+    {
+      "domain": "shein.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["shopping", "fashion"]
+    },
+    {
+      "domain": "temu.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["shopping"]
+    },
+    {
+      "domain": "asos.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["shopping", "fashion"]
+    },
+    {
+      "domain": "zara.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["shopping", "fashion"]
+    },
+    {
+      "domain": "buzzfeed.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["entertainment", "news"]
+    },
+    {
+      "domain": "9gag.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["entertainment", "memes"]
+    },
+    {
+      "domain": "imgur.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["entertainment", "images"]
+    },
+    {
+      "domain": "giphy.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["entertainment", "images"]
+    },
+    {
+      "domain": "dailymotion.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["video", "entertainment"]
+    },
+    {
+      "domain": "vimeo.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["video"]
+    },
+    {
+      "domain": "imdb.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["entertainment", "movies"]
+    },
+    {
+      "domain": "rottentomatoes.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["entertainment", "movies"]
+    },
+    {
+      "domain": "letterboxd.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["entertainment", "movies"]
+    },
+    {
+      "domain": "tinder.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["social", "dating"]
+    },
+    {
+      "domain": "bumble.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["social", "dating"]
+    },
+    {
+      "domain": "hinge.co",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["social", "dating"]
+    },
+    {
+      "domain": "match.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["social", "dating"]
+    },
+    {
+      "domain": "okcupid.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["social", "dating"]
+    },
+    {
+      "domain": "whatsapp.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["messaging"]
+    },
+    {
+      "domain": "web.whatsapp.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["messaging"]
+    },
+    {
+      "domain": "telegram.org",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["messaging"]
+    },
+    {
+      "domain": "web.telegram.org",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["messaging"]
+    },
+    {
+      "domain": "signal.org",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["messaging"]
+    },
+    {
+      "domain": "weibo.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["social-media"]
+    },
+    {
+      "domain": "vk.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["social-media"]
+    },
+    {
+      "domain": "linkedin.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["social-media", "professional"]
+    },
+    {
+      "domain": "4chan.org",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["forum", "entertainment"]
+    },
+    {
+      "domain": "wattpad.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["entertainment", "reading"]
+    },
+    {
+      "domain": "fanfiction.net",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["entertainment", "reading"]
+    },
+    {
+      "domain": "ao3.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["entertainment", "reading"]
+    },
+    {
+      "domain": "archiveofourown.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["entertainment", "reading"]
+    },
+    {
+      "domain": "webtoons.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["entertainment", "comics"]
+    },
+    {
+      "domain": "mangadex.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["entertainment", "manga"]
+    },
+    {
+      "domain": "manganato.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["entertainment", "manga"]
+    },
+    {
+      "domain": "mangakakalot.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["entertainment", "manga"]
+    },
+    {
+      "domain": "bbc.com/news",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["news"]
+    },
+    {
+      "domain": "cnn.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["news"]
+    },
+    {
+      "domain": "foxnews.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["news"]
+    },
+    {
+      "domain": "nytimes.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["news"]
+    },
+    {
+      "domain": "washingtonpost.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["news"]
+    },
+    {
+      "domain": "theguardian.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["news"]
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["news", "tabloid"]
+    },
+    {
+      "domain": "tmz.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["entertainment", "celebrity"]
+    },
+    {
+      "domain": "eonline.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["entertainment", "celebrity"]
+    },
+    {
+      "domain": "espn.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["sports"]
+    },
+    {
+      "domain": "bleacherreport.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["sports"]
+    },
+    {
+      "domain": "sports.yahoo.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["sports"]
+    },
+    {
+      "domain": "draftkings.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gambling", "sports"]
+    },
+    {
+      "domain": "fanduel.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gambling", "sports"]
+    },
+    {
+      "domain": "bet365.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gambling"]
+    },
+    {
+      "domain": "pokerstars.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["gambling"]
+    }
+  ]
+}

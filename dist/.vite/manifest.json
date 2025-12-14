@@ -5,53 +5,53 @@
     "src": "../../../../../../../@crx/manifest",
     "isEntry": true
   },
-  "_helpers-ltvua7OM.js": {
-    "file": "assets/helpers-ltvua7OM.js",
+  "_helpers-iGdgW3Fd.js": {
+    "file": "assets/helpers-iGdgW3Fd.js",
     "name": "helpers"
   },
-  "_index-CtIX124p.js": {
-    "file": "assets/index-CtIX124p.js",
+  "_index-BsIa5wmB.css": {
+    "file": "assets/index-BsIa5wmB.css",
+    "src": "_index-BsIa5wmB.css"
+  },
+  "_index-CaPY2LDN.js": {
+    "file": "assets/index-CaPY2LDN.js",
     "name": "index",
     "css": [
-      "assets/index-DQxkg9By.css"
+      "assets/index-BsIa5wmB.css"
     ]
-  },
-  "_index-DQxkg9By.css": {
-    "file": "assets/index-DQxkg9By.css",
-    "src": "_index-DQxkg9By.css"
   },
   "_storage-MgwycyMR.js": {
     "file": "assets/storage-MgwycyMR.js",
     "name": "storage"
   },
   "src/background/service-worker.ts": {
-    "file": "assets/service-worker.ts-DycaAO85.js",
+    "file": "assets/service-worker.ts-RfPcIEv2.js",
     "name": "service-worker.ts",
     "src": "src/background/service-worker.ts",
     "isEntry": true,
     "imports": [
       "_storage-MgwycyMR.js",
-      "_helpers-ltvua7OM.js"
+      "_helpers-iGdgW3Fd.js"
     ]
   },
   "src/options/options.html": {
-    "file": "assets/options.html-7bvqusB7.js",
+    "file": "assets/options.html-CcwfD1e1.js",
     "name": "options.html",
     "src": "src/options/options.html",
     "isEntry": true,
     "imports": [
-      "_index-CtIX124p.js",
+      "_index-CaPY2LDN.js",
       "_storage-MgwycyMR.js"
     ]
   },
   "src/popup/popup.html": {
-    "file": "assets/popup.html-C5m4pXtR.js",
+    "file": "assets/popup.html-QzmESauJ.js",
     "name": "popup.html",
     "src": "src/popup/popup.html",
     "isEntry": true,
     "imports": [
-      "_index-CtIX124p.js",
-      "_helpers-ltvua7OM.js"
+      "_index-CaPY2LDN.js",
+      "_helpers-iGdgW3Fd.js"
     ]
   }
 }

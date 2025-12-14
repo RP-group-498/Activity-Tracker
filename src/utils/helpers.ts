@@ -1,4 +1,8 @@
-import { Settings } from '../types';
+import { Settings, LegacyCategory, ClassificationInfo } from '../types';
+import {
+  getClassificationService,
+  Category,
+} from '../classification';
 
 export function generateUUID(): string {
   return crypto.randomUUID();
@@ -13,18 +17,105 @@ export function getDomainFromUrl(url: string): string {
   }
 }
 
-export function categorizeDomain(domain: string, settings: Settings): 'academic' | 'non-academic' | 'unknown' {
-  // Check if domain matches academic domains
+/**
+ * Map detailed category to legacy category for backward compatibility
+ */
+function mapToLegacyCategory(detailedCategory: Category): LegacyCategory {
+  switch (detailedCategory) {
+    case 'academic':
+      return 'academic';
+    case 'productivity':
+      return 'academic'; // Productivity is considered academic for legacy
+    case 'neutral':
+      return 'unknown';
+    case 'non_academic':
+      return 'non-academic';
+    default:
+      return 'unknown';
+  }
+}
+
+/**
+ * Categorize a domain using the new classification service
+ * Falls back to settings-based categorization if service not initialized
+ *
+ * @param domain - The domain to categorize
+ * @param settings - User settings (used as fallback and for user-defined domains)
+ * @returns Legacy category for backward compatibility
+ */
+export function categorizeDomain(
+  domain: string,
+  settings: Settings
+): LegacyCategory {
+  // First, check user-defined domains in settings (highest priority)
   if (settings.academicDomains.some(d => domain.includes(d) || d.includes(domain))) {
     return 'academic';
   }
-
-  // Check if domain matches non-academic domains
   if (settings.nonAcademicDomains.some(d => domain.includes(d) || d.includes(domain))) {
     return 'non-academic';
   }
 
+  // Use the classification service
+  try {
+    const service = getClassificationService();
+    if (service.isInitialized()) {
+      const classification = service.classify(domain);
+      return mapToLegacyCategory(classification.category);
+    }
+  } catch (error) {
+    console.warn('Classification service not available, using fallback');
+  }
+
   return 'unknown';
+}
+
+/**
+ * Get detailed classification info for a domain
+ * Returns full classification with confidence and source
+ *
+ * @param domain - The domain to classify
+ * @param settings - User settings for user-defined domains
+ * @returns Detailed classification info or null if not available
+ */
+export function getDetailedClassification(
+  domain: string,
+  settings: Settings
+): ClassificationInfo | null {
+  // Check user-defined domains first
+  if (settings.academicDomains.some(d => domain.includes(d) || d.includes(domain))) {
+    return {
+      detailedCategory: 'academic',
+      confidence: 1.0,
+      source: 'user',
+      userOverride: true,
+    };
+  }
+  if (settings.nonAcademicDomains.some(d => domain.includes(d) || d.includes(domain))) {
+    return {
+      detailedCategory: 'non_academic',
+      confidence: 1.0,
+      source: 'user',
+      userOverride: true,
+    };
+  }
+
+  // Use the classification service
+  try {
+    const service = getClassificationService();
+    if (service.isInitialized()) {
+      const classification = service.classify(domain);
+      return {
+        detailedCategory: classification.category,
+        confidence: classification.confidence,
+        source: classification.source,
+        userOverride: classification.userOverride,
+      };
+    }
+  } catch (error) {
+    console.warn('Classification service not available');
+  }
+
+  return null;
 }
 
 export function isSensitiveUrl(url: string): boolean {
