@@ -158,6 +158,6 @@ export function formatTime(milliseconds: number): string {
   }
 }
 
-export function formatDate(timestamp: number): string {
+export function formatDate(timestamp: number | string): string {
   return new Date(timestamp).toLocaleString();
 }

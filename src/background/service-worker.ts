@@ -1,4 +1,4 @@
-import { Session, TabActivity } from '../types';
+import { Session, TabActivity, SessionMessage } from '../types';
 import { StorageManager } from '../utils/storage';
 import {
   generateUUID,
@@ -12,6 +12,129 @@ import {
   initializeClassificationService,
   getClassificationService,
 } from '../classification';
+import {
+  getNativeMessagingService,
+  getConsentManager,
+  getActivityTracker,
+  getEventStorageManager,
+  prepareAndSanitizeBatch,
+} from '../services';
+
+// ============================================================================
+// New Services Integration
+// ============================================================================
+
+const nativeMessaging = getNativeMessagingService();
+const consentManager = getConsentManager();
+const activityTracker = getActivityTracker();
+const eventStorage = getEventStorageManager();
+
+// Current session info from desktop app (stored in closure for native messaging callbacks)
+
+/**
+ * Initialize the new services for desktop app integration
+ */
+async function initializeNewServices() {
+  try {
+    // Initialize consent manager
+    await consentManager.initialize();
+
+    // Check if we have consent
+    const hasConsent = await consentManager.hasValidConsent();
+    if (!hasConsent) {
+      console.log('[ServiceWorker] No consent - new tracking disabled');
+      // Still run legacy tracker for backward compatibility
+    }
+
+    // Initialize event storage
+    await eventStorage.initialize();
+
+    // Initialize activity tracker (handles its own consent checking)
+    await activityTracker.initialize();
+
+    // Set up native messaging callbacks
+    nativeMessaging.setSessionUpdateCallback((session: SessionMessage) => {
+      activityTracker.setSessionId(session.sessionId);
+      StorageManager.updateExtensionState({ isConnected: true });
+      console.log('[ServiceWorker] Desktop session started:', session.sessionId);
+
+      // Sync any pending events
+      syncPendingEvents();
+    });
+
+    nativeMessaging.setConnectionChangeCallback(async (isConnected: boolean) => {
+      await StorageManager.updateExtensionState({ isConnected });
+      if (isConnected) {
+        await syncPendingEvents();
+      } else {
+        activityTracker.setSessionId(null);
+      }
+    });
+
+    nativeMessaging.setErrorCallback(async (error: string) => {
+      await StorageManager.setLastError(error);
+      console.error('[ServiceWorker] Native messaging error:', error);
+    });
+
+    nativeMessaging.setCommandCallback(async (command) => {
+      switch (command) {
+        case 'pause':
+          await activityTracker.pause();
+          await StorageManager.updateExtensionState({ isPaused: true });
+          break;
+        case 'resume':
+          await activityTracker.resume();
+          await StorageManager.updateExtensionState({ isPaused: false });
+          break;
+        case 'clear_local':
+          await eventStorage.clearPendingEvents();
+          break;
+      }
+    });
+
+    // Attempt to connect to desktop app
+    nativeMessaging.connect();
+
+    // Set up periodic sync (every 30 seconds)
+    chrome.alarms.create('syncEvents', { periodInMinutes: 0.5 });
+
+    // Set up heartbeat (every 60 seconds)
+    chrome.alarms.create('heartbeat', { periodInMinutes: 1 });
+
+    console.log('[ServiceWorker] New services initialized');
+  } catch (error) {
+    console.error('[ServiceWorker] Failed to initialize new services:', error);
+  }
+}
+
+/**
+ * Sync pending events to desktop app
+ */
+async function syncPendingEvents() {
+  const status = nativeMessaging.getConnectionStatus();
+  if (!status.isConnected) return;
+
+  const events = await eventStorage.getPendingActivityEvents();
+  if (events.length === 0) return;
+
+  // Enrich and sanitize events before sending
+  const enrichedEvents = prepareAndSanitizeBatch(events);
+
+  // Send in batches of 50
+  const batchSize = 50;
+  for (let i = 0; i < enrichedEvents.length; i += batchSize) {
+    const batch = enrichedEvents.slice(i, i + batchSize);
+    const success = nativeMessaging.sendActivityBatch(batch);
+    if (!success) {
+      console.log('[ServiceWorker] Batch send failed, will retry later');
+      break;
+    }
+  }
+}
+
+// ============================================================================
+// Legacy TabTracker (for backward compatibility)
+// ============================================================================
 
 class TabTracker {
   private currentSession: Session | null = null;
@@ -93,13 +216,18 @@ class TabTracker {
       }
     });
 
-    // Alarm listener for periodic saves
+    // Alarm listener for periodic saves and new features
     chrome.alarms.onAlarm.addListener(async (alarm) => {
       if (alarm.name === 'saveSession') {
         await this.saveCurrentSession();
       } else if (alarm.name === 'cleanupOldData') {
         const settings = await StorageManager.getSettings();
         await StorageManager.clearOldData(settings.dataRetentionDays);
+      } else if (alarm.name === 'syncEvents') {
+        await syncPendingEvents();
+      } else if (alarm.name === 'heartbeat') {
+        const count = await eventStorage.getPendingCount();
+        nativeMessaging.sendHeartbeat(count);
       }
     });
   }
@@ -261,12 +389,31 @@ class TabTracker {
 
 // Initialize tracker when service worker starts
 const tracker = new TabTracker();
-tracker.initialize();
+
+// Initialize both legacy and new services
+async function initializeAll() {
+  await tracker.initialize();
+  await initializeNewServices();
+}
+
+initializeAll();
+
+// Handle service worker lifecycle
+chrome.runtime.onInstalled.addListener(() => {
+  console.log('[ServiceWorker] Extension installed/updated');
+  initializeAll();
+});
+
+chrome.runtime.onStartup.addListener(() => {
+  console.log('[ServiceWorker] Browser started');
+  initializeAll();
+});
 
 // Listen for messages from popup/options pages
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   (async () => {
     try {
+      // Legacy session actions
       if (message.action === 'getCurrentSession') {
         const session = await StorageManager.getCurrentSession();
         sendResponse({ success: true, data: session });
@@ -282,6 +429,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         sendResponse({ success: true, data });
       } else if (message.action === 'clearAllData') {
         await StorageManager.clearAllData();
+        await eventStorage.clearPendingEvents();
         sendResponse({ success: true });
       } else if (message.action === 'updateSettings') {
         await StorageManager.setSettings(message.settings);
@@ -342,6 +490,74 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
           sendResponse({ success: false, error: 'Classification service not initialized' });
         }
       }
+      // ============================================================================
+      // New actions for desktop app integration
+      // ============================================================================
+      else if (message.action === 'getExtensionState') {
+        const state = await StorageManager.getExtensionState();
+        sendResponse({ success: true, data: state });
+      } else if (message.action === 'getConnectionStatus') {
+        const status = nativeMessaging.getConnectionStatus();
+        sendResponse({ success: true, data: status });
+      } else if (message.action === 'togglePause') {
+        const state = await StorageManager.getExtensionState();
+        const newPaused = !state.isPaused;
+        if (newPaused) {
+          await activityTracker.pause();
+        } else {
+          await activityTracker.resume();
+        }
+        await StorageManager.updateExtensionState({ isPaused: newPaused });
+        sendResponse({ success: true, data: { isPaused: newPaused } });
+      } else if (message.action === 'getPendingEventsCount') {
+        const count = await eventStorage.getPendingCount();
+        sendResponse({ success: true, data: { count } });
+      } else if (message.action === 'getDataSummary') {
+        const summary = await eventStorage.getDataSummary();
+        sendResponse({ success: true, data: summary });
+      } else if (message.action === 'getStats') {
+        const stats = await StorageManager.getStats();
+        sendResponse({ success: true, data: stats });
+      } else if (message.action === 'forceSyncEvents') {
+        await syncPendingEvents();
+        sendResponse({ success: true });
+      }
+      // Consent actions
+      else if (message.action === 'getConsentStatus') {
+        const hasConsent = await consentManager.hasValidConsent();
+        const consentData = await consentManager.getConsentData();
+        sendResponse({ success: true, data: { hasConsent, consentData } });
+      } else if (message.action === 'grantConsent') {
+        const consent = await consentManager.grantConsent(message.options);
+        // Re-initialize activity tracker with new consent
+        await activityTracker.initialize();
+        sendResponse({ success: true, data: consent });
+      } else if (message.action === 'revokeConsent') {
+        await consentManager.revokeConsent(message.clearData ?? true);
+        sendResponse({ success: true });
+      } else if (message.action === 'updateConsentOption') {
+        await consentManager.updateConsentOption(message.option, message.value);
+        sendResponse({ success: true });
+      }
+      // Exclusion actions
+      else if (message.action === 'getExcludedDomains') {
+        const { getExclusionManager } = await import('../services');
+        const exclusions = await getExclusionManager().getExcludedDomains();
+        sendResponse({ success: true, data: exclusions });
+      } else if (message.action === 'addExclusion') {
+        const { getExclusionManager } = await import('../services');
+        await getExclusionManager().addExclusion(message.domain);
+        sendResponse({ success: true });
+      } else if (message.action === 'removeExclusion') {
+        const { getExclusionManager } = await import('../services');
+        const removed = await getExclusionManager().removeExclusion(message.domain);
+        sendResponse({ success: true, data: { removed } });
+      }
+      // Tracker status
+      else if (message.action === 'getTrackerStatus') {
+        const status = activityTracker.getStatus();
+        sendResponse({ success: true, data: status });
+      }
     } catch (error) {
       console.error('Error handling message:', error);
       sendResponse({ success: false, error: String(error) });
@@ -350,4 +566,4 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   return true; // Keep message channel open for async response
 });
 
-console.log('Behavior Tracker service worker loaded');
+console.log('Focus App Monitor service worker loaded');

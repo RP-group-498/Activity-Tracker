@@ -1,15 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "Behavior Tracker",
-  "version": "1.0.0",
-  "description": "Track browser behavior for procrastination analysis",
+  "name": "Focus App Monitor",
+  "version": "1.1.0",
+  "description": "Behavioral monitoring for procrastination research - Part of Focus App",
   "permissions": [
     "tabs",
     "activeTab",
     "storage",
     "idle",
     "alarms",
-    "downloads"
+    "downloads",
+    "webNavigation",
+    "nativeMessaging"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -21,5 +23,10 @@
   "action": {
     "default_popup": "src/popup/popup.html"
   },
-  "options_page": "src/options/options.html"
+  "options_page": "src/options/options.html",
+  "externally_connectable": {
+    "ids": [
+      "*"
+    ]
+  }
 }
