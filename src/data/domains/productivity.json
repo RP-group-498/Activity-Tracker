@@ -1,0 +1,622 @@
+{
+  "domains": [
+    {
+      "domain": "docs.google.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["documents", "google"]
+    },
+    {
+      "domain": "sheets.google.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["spreadsheets", "google"]
+    },
+    {
+      "domain": "slides.google.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["presentations", "google"]
+    },
+    {
+      "domain": "drive.google.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["storage", "google"]
+    },
+    {
+      "domain": "calendar.google.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["calendar", "google"]
+    },
+    {
+      "domain": "notion.so",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["notes", "workspace"]
+    },
+    {
+      "domain": "notion.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["notes", "workspace"]
+    },
+    {
+      "domain": "evernote.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["notes"]
+    },
+    {
+      "domain": "onenote.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["notes", "microsoft"]
+    },
+    {
+      "domain": "obsidian.md",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["notes", "knowledge"]
+    },
+    {
+      "domain": "roamresearch.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["notes", "knowledge"]
+    },
+    {
+      "domain": "logseq.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["notes", "knowledge"]
+    },
+    {
+      "domain": "github.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "git"]
+    },
+    {
+      "domain": "gitlab.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "git"]
+    },
+    {
+      "domain": "bitbucket.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "git"]
+    },
+    {
+      "domain": "stackoverflow.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "qa"]
+    },
+    {
+      "domain": "stackexchange.com",
+      "type": "suffix",
+      "confidence": 0.85,
+      "tags": ["qa"]
+    },
+    {
+      "domain": "superuser.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["qa", "tech"]
+    },
+    {
+      "domain": "serverfault.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["qa", "tech"]
+    },
+    {
+      "domain": "askubuntu.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["qa", "linux"]
+    },
+    {
+      "domain": "overleaf.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["documents", "latex"]
+    },
+    {
+      "domain": "sharelatex.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["documents", "latex"]
+    },
+    {
+      "domain": "slack.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["communication", "work"]
+    },
+    {
+      "domain": "teams.microsoft.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["communication", "microsoft"]
+    },
+    {
+      "domain": "zoom.us",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["communication", "video"]
+    },
+    {
+      "domain": "meet.google.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["communication", "google"]
+    },
+    {
+      "domain": "webex.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["communication", "video"]
+    },
+    {
+      "domain": "discord.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["communication", "chat"]
+    },
+    {
+      "domain": "trello.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["project-management"]
+    },
+    {
+      "domain": "asana.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["project-management"]
+    },
+    {
+      "domain": "monday.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["project-management"]
+    },
+    {
+      "domain": "jira.atlassian.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["project-management", "atlassian"]
+    },
+    {
+      "domain": "confluence.atlassian.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["documentation", "atlassian"]
+    },
+    {
+      "domain": "atlassian.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["project-management"]
+    },
+    {
+      "domain": "linear.app",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["project-management"]
+    },
+    {
+      "domain": "clickup.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["project-management"]
+    },
+    {
+      "domain": "basecamp.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["project-management"]
+    },
+    {
+      "domain": "todoist.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["tasks"]
+    },
+    {
+      "domain": "ticktick.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["tasks"]
+    },
+    {
+      "domain": "dropbox.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["storage"]
+    },
+    {
+      "domain": "box.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["storage"]
+    },
+    {
+      "domain": "onedrive.live.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["storage", "microsoft"]
+    },
+    {
+      "domain": "icloud.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["storage", "apple"]
+    },
+    {
+      "domain": "figma.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["design"]
+    },
+    {
+      "domain": "canva.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["design"]
+    },
+    {
+      "domain": "miro.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["collaboration", "whiteboard"]
+    },
+    {
+      "domain": "lucidchart.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["diagrams"]
+    },
+    {
+      "domain": "draw.io",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["diagrams"]
+    },
+    {
+      "domain": "diagrams.net",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["diagrams"]
+    },
+    {
+      "domain": "excalidraw.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["diagrams", "whiteboard"]
+    },
+    {
+      "domain": "vercel.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "hosting"]
+    },
+    {
+      "domain": "netlify.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "hosting"]
+    },
+    {
+      "domain": "heroku.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "hosting"]
+    },
+    {
+      "domain": "aws.amazon.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "cloud"]
+    },
+    {
+      "domain": "console.aws.amazon.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "cloud"]
+    },
+    {
+      "domain": "cloud.google.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "cloud"]
+    },
+    {
+      "domain": "console.cloud.google.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "cloud"]
+    },
+    {
+      "domain": "azure.microsoft.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "cloud"]
+    },
+    {
+      "domain": "portal.azure.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "cloud"]
+    },
+    {
+      "domain": "digitalocean.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "cloud"]
+    },
+    {
+      "domain": "npmjs.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "packages"]
+    },
+    {
+      "domain": "pypi.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "packages"]
+    },
+    {
+      "domain": "crates.io",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "packages"]
+    },
+    {
+      "domain": "rubygems.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "packages"]
+    },
+    {
+      "domain": "packagist.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "packages"]
+    },
+    {
+      "domain": "devdocs.io",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["development", "documentation"]
+    },
+    {
+      "domain": "developer.mozilla.org",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["development", "documentation"]
+    },
+    {
+      "domain": "readthedocs.io",
+      "type": "suffix",
+      "confidence": 0.90,
+      "tags": ["documentation"]
+    },
+    {
+      "domain": "readthedocs.org",
+      "type": "suffix",
+      "confidence": 0.90,
+      "tags": ["documentation"]
+    },
+    {
+      "domain": "grammarly.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["writing", "tools"]
+    },
+    {
+      "domain": "hemingwayapp.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["writing", "tools"]
+    },
+    {
+      "domain": "writefull.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["writing", "tools"]
+    },
+    {
+      "domain": "office.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["office", "microsoft"]
+    },
+    {
+      "domain": "office365.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["office", "microsoft"]
+    },
+    {
+      "domain": "live.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["office", "microsoft"]
+    },
+    {
+      "domain": "outlook.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["email", "microsoft"]
+    },
+    {
+      "domain": "outlook.office.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["email", "microsoft"]
+    },
+    {
+      "domain": "mail.google.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["email", "google"]
+    },
+    {
+      "domain": "airtable.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["database", "collaboration"]
+    },
+    {
+      "domain": "coda.io",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["documents", "collaboration"]
+    },
+    {
+      "domain": "chatgpt.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["ai", "tools"]
+    },
+    {
+      "domain": "chat.openai.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["ai", "tools"]
+    },
+    {
+      "domain": "claude.ai",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["ai", "tools"]
+    },
+    {
+      "domain": "perplexity.ai",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["ai", "search"]
+    },
+    {
+      "domain": "copilot.microsoft.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["ai", "tools"]
+    },
+    {
+      "domain": "gemini.google.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["ai", "tools"]
+    },
+    {
+      "domain": "codesandbox.io",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "ide"]
+    },
+    {
+      "domain": "codepen.io",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["development", "playground"]
+    },
+    {
+      "domain": "replit.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["development", "ide"]
+    },
+    {
+      "domain": "stackblitz.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "ide"]
+    },
+    {
+      "domain": "jsfiddle.net",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["development", "playground"]
+    },
+    {
+      "domain": "postman.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "api"]
+    },
+    {
+      "domain": "insomnia.rest",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "api"]
+    },
+    {
+      "domain": "swagger.io",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "api"]
+    },
+    {
+      "domain": "docker.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "containers"]
+    },
+    {
+      "domain": "hub.docker.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "containers"]
+    },
+    {
+      "domain": "kubernetes.io",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "containers"]
+    },
+    {
+      "domain": "sentry.io",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "monitoring"]
+    },
+    {
+      "domain": "datadog.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "monitoring"]
+    },
+    {
+      "domain": "newrelic.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "monitoring"]
+    },
+    {
+      "domain": "circleci.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "ci-cd"]
+    },
+    {
+      "domain": "travis-ci.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "ci-cd"]
+    },
+    {
+      "domain": "jenkins.io",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["development", "ci-cd"]
+    }
+  ]
+}

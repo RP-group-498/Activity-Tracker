@@ -1,0 +1,496 @@
+{
+  "domains": [
+    {
+      "domain": "google.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["search"]
+    },
+    {
+      "domain": "bing.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["search"]
+    },
+    {
+      "domain": "duckduckgo.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["search"]
+    },
+    {
+      "domain": "yahoo.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["search", "portal"]
+    },
+    {
+      "domain": "search.yahoo.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["search"]
+    },
+    {
+      "domain": "baidu.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["search"]
+    },
+    {
+      "domain": "yandex.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["search"]
+    },
+    {
+      "domain": "ecosia.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["search"]
+    },
+    {
+      "domain": "startpage.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["search"]
+    },
+    {
+      "domain": "translate.google.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["translation", "tools"]
+    },
+    {
+      "domain": "deepl.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["translation", "tools"]
+    },
+    {
+      "domain": "maps.google.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["maps", "navigation"]
+    },
+    {
+      "domain": "maps.apple.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["maps", "navigation"]
+    },
+    {
+      "domain": "openstreetmap.org",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["maps", "navigation"]
+    },
+    {
+      "domain": "waze.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["maps", "navigation"]
+    },
+    {
+      "domain": "weather.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["weather"]
+    },
+    {
+      "domain": "accuweather.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["weather"]
+    },
+    {
+      "domain": "medium.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["blogging", "articles"]
+    },
+    {
+      "domain": "substack.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["blogging", "newsletters"]
+    },
+    {
+      "domain": "dev.to",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["blogging", "tech"]
+    },
+    {
+      "domain": "hashnode.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["blogging", "tech"]
+    },
+    {
+      "domain": "blogger.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["blogging"]
+    },
+    {
+      "domain": "wordpress.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["blogging", "cms"]
+    },
+    {
+      "domain": "quora.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["qa", "forum"]
+    },
+    {
+      "domain": "answers.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["qa"]
+    },
+    {
+      "domain": "apple.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["tech", "company"]
+    },
+    {
+      "domain": "microsoft.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["tech", "company"]
+    },
+    {
+      "domain": "adobe.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["tech", "software"]
+    },
+    {
+      "domain": "salesforce.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["business", "crm"]
+    },
+    {
+      "domain": "hubspot.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["business", "marketing"]
+    },
+    {
+      "domain": "paypal.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["finance", "payments"]
+    },
+    {
+      "domain": "stripe.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["finance", "payments", "dev"]
+    },
+    {
+      "domain": "indeed.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["jobs"]
+    },
+    {
+      "domain": "glassdoor.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["jobs", "reviews"]
+    },
+    {
+      "domain": "monster.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["jobs"]
+    },
+    {
+      "domain": "ziprecruiter.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["jobs"]
+    },
+    {
+      "domain": "yelp.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["reviews", "local"]
+    },
+    {
+      "domain": "tripadvisor.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["reviews", "travel"]
+    },
+    {
+      "domain": "booking.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["travel"]
+    },
+    {
+      "domain": "airbnb.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["travel", "accommodation"]
+    },
+    {
+      "domain": "expedia.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["travel"]
+    },
+    {
+      "domain": "kayak.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["travel"]
+    },
+    {
+      "domain": "skyscanner.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["travel", "flights"]
+    },
+    {
+      "domain": "google.com/flights",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["travel", "flights"]
+    },
+    {
+      "domain": "uber.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["transportation"]
+    },
+    {
+      "domain": "lyft.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["transportation"]
+    },
+    {
+      "domain": "doordash.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["food", "delivery"]
+    },
+    {
+      "domain": "ubereats.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["food", "delivery"]
+    },
+    {
+      "domain": "grubhub.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["food", "delivery"]
+    },
+    {
+      "domain": "instacart.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["food", "delivery", "shopping"]
+    },
+    {
+      "domain": "ifttt.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["automation", "tools"]
+    },
+    {
+      "domain": "zapier.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["automation", "tools"]
+    },
+    {
+      "domain": "make.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["automation", "tools"]
+    },
+    {
+      "domain": "calendly.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["scheduling", "tools"]
+    },
+    {
+      "domain": "doodle.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["scheduling", "tools"]
+    },
+    {
+      "domain": "typeform.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["forms", "tools"]
+    },
+    {
+      "domain": "surveymonkey.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["surveys", "tools"]
+    },
+    {
+      "domain": "forms.google.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["forms", "google"]
+    },
+    {
+      "domain": "bitly.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["tools", "links"]
+    },
+    {
+      "domain": "tinyurl.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["tools", "links"]
+    },
+    {
+      "domain": "speedtest.net",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["tools", "network"]
+    },
+    {
+      "domain": "fast.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["tools", "network"]
+    },
+    {
+      "domain": "archive.org",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["archive", "reference"]
+    },
+    {
+      "domain": "web.archive.org",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["archive", "reference"]
+    },
+    {
+      "domain": "pastebin.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["tools", "sharing"]
+    },
+    {
+      "domain": "gist.github.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["tools", "code-sharing"]
+    },
+    {
+      "domain": "imgur.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["images", "sharing"]
+    },
+    {
+      "domain": "flickr.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["images", "sharing"]
+    },
+    {
+      "domain": "unsplash.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["images", "stock"]
+    },
+    {
+      "domain": "pexels.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["images", "stock"]
+    },
+    {
+      "domain": "istockphoto.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["images", "stock"]
+    },
+    {
+      "domain": "shutterstock.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["images", "stock"]
+    },
+    {
+      "domain": "gettyimages.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["images", "stock"]
+    },
+    {
+      "domain": "producthunt.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["tech", "startups"]
+    },
+    {
+      "domain": "craigslist.org",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["classifieds"]
+    },
+    {
+      "domain": "nextdoor.com",
+      "type": "exact",
+      "confidence": 0.70,
+      "tags": ["social", "local"]
+    },
+    {
+      "domain": "eventbrite.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["events"]
+    },
+    {
+      "domain": "meetup.com",
+      "type": "exact",
+      "confidence": 0.75,
+      "tags": ["events", "social"]
+    },
+    {
+      "domain": "twilio.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["dev", "communication"]
+    },
+    {
+      "domain": "sendgrid.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["dev", "email"]
+    },
+    {
+      "domain": "mailchimp.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["marketing", "email"]
+    },
+    {
+      "domain": "convertkit.com",
+      "type": "exact",
+      "confidence": 0.80,
+      "tags": ["marketing", "email"]
+    }
+  ]
+}

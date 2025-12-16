@@ -1,57 +1,57 @@
 {
   "../../../../../../../@crx/manifest": {
-    "file": "assets/crx-manifest.js-PmAVW46p.js",
+    "file": "assets/crx-manifest.js-C2i6GJQL.js",
     "name": "crx-manifest.js",
     "src": "../../../../../../../@crx/manifest",
     "isEntry": true
   },
-  "_helpers-ltvua7OM.js": {
-    "file": "assets/helpers-ltvua7OM.js",
+  "_helpers-CS4C6e_d.js": {
+    "file": "assets/helpers-CS4C6e_d.js",
     "name": "helpers"
   },
-  "_index-CtIX124p.js": {
-    "file": "assets/index-CtIX124p.js",
+  "_index-COoM7qWS.js": {
+    "file": "assets/index-COoM7qWS.js",
     "name": "index",
     "css": [
-      "assets/index-DQxkg9By.css"
+      "assets/index-ZB-_H-5m.css"
     ]
   },
-  "_index-DQxkg9By.css": {
-    "file": "assets/index-DQxkg9By.css",
-    "src": "_index-DQxkg9By.css"
+  "_index-ZB-_H-5m.css": {
+    "file": "assets/index-ZB-_H-5m.css",
+    "src": "_index-ZB-_H-5m.css"
   },
-  "_storage-MgwycyMR.js": {
-    "file": "assets/storage-MgwycyMR.js",
+  "_storage-BzDfk7a8.js": {
+    "file": "assets/storage-BzDfk7a8.js",
     "name": "storage"
   },
   "src/background/service-worker.ts": {
-    "file": "assets/service-worker.ts-DycaAO85.js",
+    "file": "assets/service-worker.ts-DiQrGk3l.js",
     "name": "service-worker.ts",
     "src": "src/background/service-worker.ts",
     "isEntry": true,
     "imports": [
-      "_storage-MgwycyMR.js",
-      "_helpers-ltvua7OM.js"
+      "_storage-BzDfk7a8.js",
+      "_helpers-CS4C6e_d.js"
     ]
   },
   "src/options/options.html": {
-    "file": "assets/options.html-7bvqusB7.js",
+    "file": "assets/options.html-CT2k8p0r.js",
     "name": "options.html",
     "src": "src/options/options.html",
     "isEntry": true,
     "imports": [
-      "_index-CtIX124p.js",
-      "_storage-MgwycyMR.js"
+      "_index-COoM7qWS.js",
+      "_storage-BzDfk7a8.js"
     ]
   },
   "src/popup/popup.html": {
-    "file": "assets/popup.html-C5m4pXtR.js",
+    "file": "assets/popup.html-BMAHQEJF.js",
     "name": "popup.html",
     "src": "src/popup/popup.html",
     "isEntry": true,
     "imports": [
-      "_index-CtIX124p.js",
-      "_helpers-ltvua7OM.js"
+      "_index-COoM7qWS.js",
+      "_helpers-CS4C6e_d.js"
     ]
   }
 }

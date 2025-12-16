@@ -1,0 +1,550 @@
+{
+  "domains": [
+    {
+      "domain": ".edu",
+      "type": "suffix",
+      "confidence": 0.95,
+      "tags": ["education", "university"]
+    },
+    {
+      "domain": ".ac.uk",
+      "type": "suffix",
+      "confidence": 0.95,
+      "tags": ["education", "uk"]
+    },
+    {
+      "domain": ".ac.jp",
+      "type": "suffix",
+      "confidence": 0.95,
+      "tags": ["education", "japan"]
+    },
+    {
+      "domain": ".edu.au",
+      "type": "suffix",
+      "confidence": 0.95,
+      "tags": ["education", "australia"]
+    },
+    {
+      "domain": ".edu.cn",
+      "type": "suffix",
+      "confidence": 0.95,
+      "tags": ["education", "china"]
+    },
+    {
+      "domain": ".edu.br",
+      "type": "suffix",
+      "confidence": 0.95,
+      "tags": ["education", "brazil"]
+    },
+    {
+      "domain": ".edu.in",
+      "type": "suffix",
+      "confidence": 0.95,
+      "tags": ["education", "india"]
+    },
+    {
+      "domain": "scholar.google.com",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "papers"]
+    },
+    {
+      "domain": "jstor.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "journals"]
+    },
+    {
+      "domain": "sciencedirect.com",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "journals"]
+    },
+    {
+      "domain": "springer.com",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "publisher"]
+    },
+    {
+      "domain": "link.springer.com",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "publisher"]
+    },
+    {
+      "domain": "ieee.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "engineering"]
+    },
+    {
+      "domain": "ieeexplore.ieee.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "engineering"]
+    },
+    {
+      "domain": "acm.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "computing"]
+    },
+    {
+      "domain": "dl.acm.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "computing"]
+    },
+    {
+      "domain": "nature.com",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "science"]
+    },
+    {
+      "domain": "science.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "science"]
+    },
+    {
+      "domain": "pubmed.ncbi.nlm.nih.gov",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "medical"]
+    },
+    {
+      "domain": "ncbi.nlm.nih.gov",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "medical"]
+    },
+    {
+      "domain": "arxiv.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "preprints"]
+    },
+    {
+      "domain": "researchgate.net",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "social"]
+    },
+    {
+      "domain": "academia.edu",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "social"]
+    },
+    {
+      "domain": "semanticscholar.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "ai"]
+    },
+    {
+      "domain": "coursera.org",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["learning", "mooc"]
+    },
+    {
+      "domain": "edx.org",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["learning", "mooc"]
+    },
+    {
+      "domain": "khanacademy.org",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["learning", "education"]
+    },
+    {
+      "domain": "udemy.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "courses"]
+    },
+    {
+      "domain": "skillshare.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["learning", "courses"]
+    },
+    {
+      "domain": "lynda.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "courses"]
+    },
+    {
+      "domain": "linkedin.com/learning",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "courses"]
+    },
+    {
+      "domain": "pluralsight.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "tech"]
+    },
+    {
+      "domain": "udacity.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["learning", "tech"]
+    },
+    {
+      "domain": "codecademy.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "coding"]
+    },
+    {
+      "domain": "freecodecamp.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "coding"]
+    },
+    {
+      "domain": "wikipedia.org",
+      "type": "suffix",
+      "confidence": 0.90,
+      "tags": ["reference", "encyclopedia"]
+    },
+    {
+      "domain": "britannica.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["reference", "encyclopedia"]
+    },
+    {
+      "domain": "wolframalpha.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["reference", "math"]
+    },
+    {
+      "domain": "mathworld.wolfram.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["reference", "math"]
+    },
+    {
+      "domain": "wiley.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "publisher"]
+    },
+    {
+      "domain": "onlinelibrary.wiley.com",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "publisher"]
+    },
+    {
+      "domain": "tandfonline.com",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "publisher"]
+    },
+    {
+      "domain": "elsevier.com",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "publisher"]
+    },
+    {
+      "domain": "sagepub.com",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "publisher"]
+    },
+    {
+      "domain": "cambridge.org",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "publisher"]
+    },
+    {
+      "domain": "oup.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "publisher"]
+    },
+    {
+      "domain": "academic.oup.com",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "publisher"]
+    },
+    {
+      "domain": "plos.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "open-access"]
+    },
+    {
+      "domain": "frontiersin.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "open-access"]
+    },
+    {
+      "domain": "mdpi.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "open-access"]
+    },
+    {
+      "domain": "biorxiv.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "preprints"]
+    },
+    {
+      "domain": "medrxiv.org",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["research", "preprints"]
+    },
+    {
+      "domain": "ssrn.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "preprints"]
+    },
+    {
+      "domain": "philpapers.org",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "philosophy"]
+    },
+    {
+      "domain": "plato.stanford.edu",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["reference", "philosophy"]
+    },
+    {
+      "domain": "gutenberg.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["reference", "books"]
+    },
+    {
+      "domain": "libgen.is",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["books"]
+    },
+    {
+      "domain": "sci-hub.se",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["research", "papers"]
+    },
+    {
+      "domain": "brilliant.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "math"]
+    },
+    {
+      "domain": "mathway.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "math"]
+    },
+    {
+      "domain": "symbolab.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "math"]
+    },
+    {
+      "domain": "desmos.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "math"]
+    },
+    {
+      "domain": "geogebra.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "math"]
+    },
+    {
+      "domain": "duolingo.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "languages"]
+    },
+    {
+      "domain": "babbel.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "languages"]
+    },
+    {
+      "domain": "memrise.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "languages"]
+    },
+    {
+      "domain": "quizlet.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["learning", "flashcards"]
+    },
+    {
+      "domain": "anki.net",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["learning", "flashcards"]
+    },
+    {
+      "domain": "ankiweb.net",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["learning", "flashcards"]
+    },
+    {
+      "domain": "orcid.org",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "identity"]
+    },
+    {
+      "domain": "mendeley.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "reference-manager"]
+    },
+    {
+      "domain": "zotero.org",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "reference-manager"]
+    },
+    {
+      "domain": "endnote.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "reference-manager"]
+    },
+    {
+      "domain": "datacamp.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "data-science"]
+    },
+    {
+      "domain": "kaggle.com",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "data-science"]
+    },
+    {
+      "domain": "leetcode.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["learning", "coding"]
+    },
+    {
+      "domain": "hackerrank.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["learning", "coding"]
+    },
+    {
+      "domain": "codewars.com",
+      "type": "exact",
+      "confidence": 0.85,
+      "tags": ["learning", "coding"]
+    },
+    {
+      "domain": "exercism.org",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["learning", "coding"]
+    },
+    {
+      "domain": "mit.edu",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["university"]
+    },
+    {
+      "domain": "stanford.edu",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["university"]
+    },
+    {
+      "domain": "harvard.edu",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["university"]
+    },
+    {
+      "domain": "berkeley.edu",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["university"]
+    },
+    {
+      "domain": "ox.ac.uk",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["university"]
+    },
+    {
+      "domain": "cam.ac.uk",
+      "type": "exact",
+      "confidence": 0.98,
+      "tags": ["university"]
+    },
+    {
+      "domain": "openai.com/research",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["research", "ai"]
+    },
+    {
+      "domain": "deepmind.com/research",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["research", "ai"]
+    },
+    {
+      "domain": "huggingface.co/papers",
+      "type": "exact",
+      "confidence": 0.90,
+      "tags": ["research", "ai"]
+    },
+    {
+      "domain": "paperswithcode.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "ai"]
+    },
+    {
+      "domain": "connectedpapers.com",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "tools"]
+    },
+    {
+      "domain": "scite.ai",
+      "type": "exact",
+      "confidence": 0.95,
+      "tags": ["research", "tools"]
+    }
+  ]
+}
