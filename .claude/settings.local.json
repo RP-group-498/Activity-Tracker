@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(python -m venv:*)",
+      "Bash(py -m venv:*)",
+      "Bash(where:*)",
+      "Bash(\"/c/Users/amara/AppData/Local/Programs/Python/Python311/python.exe\" --version)",
+      "Bash(\"/c/Users/amara/AppData/Local/Programs/Python/Python312/python.exe\" --version)",
+      "Bash(\"/c/Python311/python.exe\" --version)",
+      "Bash(\"/c/Python312/python.exe\" --version)",
+      "Bash(conda:*)",
+      "Bash(npm run dev:*)"
     ]
   }
 }
