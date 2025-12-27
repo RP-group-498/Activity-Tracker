@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Browser extension for tracking user browsing behavior (time spent on tabs, domains visited, session management) to support procrastination detection analysis. Built with TypeScript, React, Vite, and Manifest V3. Part of a larger system that includes a desktop application for comprehensive behavior analysis.
+Browser extension for tracking and classifying user browsing behavior to support procrastination detection research. Built with TypeScript, React, Vite, and Manifest V3. Integrates with the Focus App Desktop application via Chrome Native Messaging for real-time data sync and ML-based classification.
 
 ## Build Commands
 
@@ -23,132 +23,188 @@ After building, load the `dist/` folder as an unpacked extension in Chrome (`chr
 
 ## Architecture Overview
 
-### Three-Tier Architecture
+### Four-Layer Architecture
 
 1. **Background Service Worker** (`src/background/service-worker.ts`)
-   - Singleton `TabTracker` class manages all tracking state
    - Event-driven architecture using Chrome Extension APIs
-   - Persists state periodically (every 1 minute) and on critical events
-   - **State is ephemeral in Manifest V3**: Service worker can be terminated at any time, so all state must be persisted to `chrome.storage.local`
+   - Coordinates all services (tracking, classification, native messaging)
+   - Persists state periodically and on critical events
+   - **State is ephemeral in Manifest V3**: Service worker can be terminated at any time
 
-2. **React UI Layer** (popup and options pages)
-   - Popup (`src/popup/`): Current session stats, history, export controls
-   - Options (`src/options/`): Settings configuration for domain categorization
+2. **Services Layer** (`src/services/`)
+   - `nativeMessaging.ts` - Desktop app communication via Chrome Native Messaging
+   - `activityTracker.ts` - Tab and activity tracking logic
+   - `eventStorage.ts` - Event buffering and sync queue
+   - `enrichment.ts` - URL/context enrichment for classification
+   - `consentManager.ts` - User consent flow management
+   - `exclusionManager.ts` - Domain exclusion handling
+
+3. **Classification Layer** (`src/classification/`)
+   - `database.ts` - Pre-loaded domain database lookup
+   - `rules.ts` - Rule engine for pattern matching
+   - `cache.ts` - Classification cache management
+   - Multi-tier classification: database → rules → cache → desktop app
+
+4. **React UI Layer** (popup and options pages)
+   - Popup (`src/popup/`): Session stats, connection status, export controls
+   - Options (`src/options/`): Settings, domain management, consent
    - Communicate with service worker via `chrome.runtime.sendMessage()`
-
-3. **Storage Layer** (`src/utils/storage.ts`)
-   - `StorageManager` class wraps `chrome.storage.local` API
-   - Static methods for type-safe storage operations
-   - Manages: current session, session history, user settings
 
 ### Data Flow
 
 ```
-Chrome Tab Events → Service Worker → TabTracker Class → StorageManager → chrome.storage.local
-                                          ↓
-                                    Message Handler
-                                          ↓
-                                   UI Components (Popup/Options)
+Chrome Tab Events → Service Worker → Activity Tracker → Event Storage
+                                           ↓
+                                    Classification Service
+                                           ↓
+                                    Native Messaging → Desktop App
+                                           ↓
+                                    UI Components (Popup/Options)
 ```
 
 ### Key Concepts
 
-**Session Management**:
-- A "session" is created on extension load and tracks all tab activity until manually ended
-- Each session contains multiple `TabActivity` objects representing individual tabs
-- Sessions are saved to history when ended and a new session begins
+**Desktop App Integration**:
+- Extension connects to desktop app via Chrome Native Messaging
+- Session IDs come FROM the desktop app
+- Events are buffered locally when desktop app is disconnected
+- Desktop app performs advanced ML classification
 
-**Tab Tracking Lifecycle**:
-1. Tab activated → `startTrackingTab()` → Create/update `TabActivity` with new `ActivityPeriod`
-2. Tab deactivated/closed → `stopTrackingTab()` → Close current `ActivityPeriod`, calculate `timeSpent`
-3. Browser loses focus/idle → `pauseTracking()` → Stop all active tracking
-4. Browser regains focus → `resumeTracking()` → Resume tracking active tab
+**Multi-Tier Classification**:
+1. Domain database lookup (instant, high confidence)
+2. Rule engine (pattern matching for .edu, keywords, etc.)
+3. Local cache (previously classified domains)
+4. Desktop app (ML-based for complex cases)
+
+**Data Enrichment**:
+- YouTube context (video ID, playlist, search query)
+- Google context (service type, search vs docs)
+- Social media context (feed vs messaging)
 
 **Privacy Safeguards**:
-- URLs containing sensitive keywords (password, login, bank, etc.) are filtered in `isSensitiveUrl()`
-- Query parameters stripped via `sanitizeUrl()`
-- Chrome:// and extension:// URLs are excluded
-- Incognito mode excluded by default (extension must be explicitly enabled for incognito)
+- Sensitive URLs filtered (`isSensitiveUrl()`)
+- Query parameters stripped
+- Incognito mode excluded by default
+- User consent required before tracking
 
 ## Type System
 
 All core types in `src/types/index.ts`:
 
-- **TabActivity**: Represents a single tab's tracking data (URL, domain, time spent, category, activity periods)
-- **Session**: Collection of TabActivity objects with session metadata (ID, start/end times)
-- **Settings**: User configuration (tracking enabled, domain categorization, thresholds)
-- **ActivityPeriod**: Time range when a tab was active (start/end timestamps)
+**New Event Types (for desktop app)**:
+- `ActivityEvent` - Single page visit with enrichment data
+- `TabSwitchEvent` - Tab switch events
+- `IdleStateEvent` - Idle state changes
 
-## Service Worker Message API
+**Classification Types**:
+- `DetailedCategory` - 'academic' | 'productivity' | 'neutral' | 'non_academic'
+- `ClassificationSource` - 'database' | 'rule' | 'cache' | 'api' | 'user'
+- `ClassificationInfo` - Full classification with confidence and source
 
-The background service worker listens for messages with these actions:
+**Legacy Types (backward compatibility)**:
+- `TabActivity`, `Session`, `Settings` - Original types still used in UI
 
-- `getCurrentSession`: Returns active session or null
-- `getSessions`: Returns all historical sessions
-- `endSession`: Ends current session, saves to history, starts new session
-- `exportData`: Returns complete `StorageData` for export
-- `clearAllData`: Wipes all stored data
-- `updateSettings`: Updates user settings
+## Domain Database
 
-All messages return `{ success: boolean, data?: any, error?: string }`
+Pre-loaded domain databases in `src/data/domains/`:
+- `academic.json` - Educational, research, learning platforms
+- `productivity.json` - Work tools, development, documentation
+- `neutral.json` - Context-dependent (Google Search, etc.)
+- `non-academic.json` - Entertainment, social media, leisure
+
+## Native Messaging Protocol
+
+**Extension → Desktop App**:
+- `connect` - Initial connection with extension info
+- `activity_batch` - Batch of activity events
+- `heartbeat` - Keep-alive with pending event count
+
+**Desktop App → Extension**:
+- `session` - Session info (ID, user, status)
+- `ack` - Acknowledgment of received events
+- `command` - Commands (pause, resume, clear_local)
+- `error` - Error messages
+
+## Important Files
+
+| File | Purpose |
+|------|---------|
+| `src/services/nativeMessaging.ts` | Desktop app communication |
+| `src/services/activityTracker.ts` | Tab tracking logic |
+| `src/services/eventStorage.ts` | Event buffering |
+| `src/classification/index.ts` | Classification service |
+| `src/classification/database.ts` | Domain database |
+| `src/classification/rules.ts` | Rule engine |
+| `src/types/index.ts` | All type definitions |
+| `docs/classification_guide_md.md` | Classification architecture |
 
 ## Vite + CRXJS Configuration
 
 - **CRXJS plugin** (`@crxjs/vite-plugin`) transforms `src/manifest.json` and builds the extension
 - Manifest references TypeScript files directly; CRXJS handles bundling
-- **Tailwind CSS v4** via `@tailwindcss/vite` plugin (requires `import '../index.css'` in entry points)
-- Hot Module Replacement works in dev mode for UI files; service worker requires manual extension reload
+- **Tailwind CSS v4** via `@tailwindcss/vite` plugin
+- Hot Module Replacement works in dev mode for UI files
 
 ## Important Constraints
 
 **Manifest V3 Service Workers**:
-- Cannot use long-lived background pages; service workers are event-driven and can terminate
-- All persistent state MUST be in `chrome.storage.local`, not in-memory variables
+- Cannot use long-lived background pages; service workers are event-driven
+- All persistent state MUST be in `chrome.storage.local`
 - Use `chrome.alarms` for periodic tasks (not `setInterval`)
 - Module-based workers only (`"type": "module"` in manifest)
 
-**Chrome Storage Limits**:
-- `chrome.storage.local`: 10MB by default (unlimited if `"unlimitedStorage"` permission added)
-- Current implementation uses periodic cleanup based on `dataRetentionDays` setting
+**Native Messaging**:
+- Requires desktop app to be running for real-time sync
+- Events buffered locally when disconnected
+- Native host must be registered in Windows Registry
 
 ## Testing the Extension
 
 1. Build: `npm run build`
 2. Load `dist/` folder in Chrome as unpacked extension
-3. Check service worker console: `chrome://extensions/` → Find extension → Click "service worker"
-4. Debug popup: Open popup → Right-click → Inspect
-5. Common logs to verify:
-   - "Tab Tracker initialized"
-   - "New session started: [uuid]"
-   - "Started tracking tab: [domain]"
-   - "Session saved: [uuid]"
-
-## Export Functionality
-
-- **JSON export**: Full structured data for programmatic analysis (ML pipelines)
-- **CSV export**: Flattened tabular format using PapaParse (one row per TabActivity)
-- Both use `chrome.downloads.download()` API (requires `"downloads"` permission)
-- Export includes all sessions (historical + current) and settings
-
-## Future Integration
-
-Extension is designed to integrate with a desktop application for procrastination detection:
-- Exported data combines browser behavior with desktop metrics (idle time, mouse movements, app usage)
-- Desktop app performs ML-based classification (academic vs non-academic)
-- Planned integration methods: Native Messaging API, local HTTP server, or file-based sync
+3. Note the Extension ID (needed for desktop app)
+4. Start desktop app backend
+5. Check service worker console for connection logs
+6. Common logs to verify:
+   - "NativeMessaging: Connected to desktop app"
+   - "Classification: Domain classified as [category]"
+   - "EventStorage: Events synced successfully"
 
 ## Common Modifications
 
-**Adding a new tracked metric**:
-1. Update `TabActivity` interface in `src/types/index.ts`
-2. Modify `startTrackingTab()` in service worker to collect the metric
-3. Update CSV export in `src/utils/export.ts` to include new field
+**Adding a new domain to database**:
+1. Edit appropriate file in `src/data/domains/`
+2. Follow existing JSON structure
+3. Rebuild extension
 
-**Changing categorization logic**:
-- Edit `categorizeDomain()` in `src/utils/helpers.ts`
-- Update `DEFAULT_SETTINGS.academicDomains/nonAcademicDomains` in `src/utils/storage.ts`
+**Adding a new classification rule**:
+1. Edit `src/classification/rules.ts`
+2. Add rule to appropriate category
+3. Test with service worker console
 
-**Debugging storage issues**:
-- Check `chrome://extensions/` → Extension → "Inspect views: service worker"
-- View storage: DevTools → Application → Storage → Extension Storage
-- Clear storage: Call `chrome.storage.local.clear()` in service worker console
+**Changing enrichment logic**:
+1. Edit `src/services/enrichment.ts`
+2. Update context extraction functions
+3. Update types in `src/types/index.ts` if needed
+
+**Debugging native messaging**:
+1. Check desktop app is running
+2. Check native host is registered
+3. View service worker console for connection status
+4. Check `nativeMessaging.getConnectionStatus()`
+
+## Debugging
+
+**Service Worker Console**:
+- `chrome://extensions/` → Extension → Click "service worker"
+
+**Popup Console**:
+- Open popup → Right-click → Inspect
+
+**Storage Inspection**:
+- DevTools → Application → Storage → Extension Storage
+
+**Native Messaging Debug**:
+- Check `chrome.runtime.lastError` in service worker
+- Verify extension ID in native host manifest
+- Check native host log file in desktop app
