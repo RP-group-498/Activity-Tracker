@@ -94,13 +94,19 @@ class NativeMessagingService {
         this.handleDisconnect();
       });
 
-      // Send initial connection message
-      this.send({
+      // Send initial connection message directly (bypass isConnected check)
+      const connectMessage = {
         type: 'connect',
         extensionId: chrome.runtime.id,
         extensionVersion: chrome.runtime.getManifest().version,
         timestamp: new Date().toISOString(),
-      });
+      };
+      try {
+        this.port.postMessage(connectMessage);
+        console.log('[NativeMsg] Connect message sent');
+      } catch (error) {
+        console.error('[NativeMsg] Failed to send connect message:', error);
+      }
 
       console.log('[NativeMsg] Connection initiated');
     } catch (error) {
