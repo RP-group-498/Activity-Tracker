@@ -9,23 +9,23 @@
     "file": "assets/helpers-CS4C6e_d.js",
     "name": "helpers"
   },
-  "_index-COoM7qWS.js": {
-    "file": "assets/index-COoM7qWS.js",
+  "_index-B8vvOX-5.js": {
+    "file": "assets/index-B8vvOX-5.js",
     "name": "index",
     "css": [
-      "assets/index-ZB-_H-5m.css"
+      "assets/index-DVMhFLPF.css"
     ]
   },
-  "_index-ZB-_H-5m.css": {
-    "file": "assets/index-ZB-_H-5m.css",
-    "src": "_index-ZB-_H-5m.css"
+  "_index-DVMhFLPF.css": {
+    "file": "assets/index-DVMhFLPF.css",
+    "src": "_index-DVMhFLPF.css"
   },
   "_storage-BzDfk7a8.js": {
     "file": "assets/storage-BzDfk7a8.js",
     "name": "storage"
   },
   "src/background/service-worker.ts": {
-    "file": "assets/service-worker.ts-DiQrGk3l.js",
+    "file": "assets/service-worker.ts-DRcIMj3l.js",
     "name": "service-worker.ts",
     "src": "src/background/service-worker.ts",
     "isEntry": true,
@@ -35,22 +35,22 @@
     ]
   },
   "src/options/options.html": {
-    "file": "assets/options.html-CT2k8p0r.js",
+    "file": "assets/options.html-9a5la2Nh.js",
     "name": "options.html",
     "src": "src/options/options.html",
     "isEntry": true,
     "imports": [
-      "_index-COoM7qWS.js",
+      "_index-B8vvOX-5.js",
       "_storage-BzDfk7a8.js"
     ]
   },
   "src/popup/popup.html": {
-    "file": "assets/popup.html-BMAHQEJF.js",
+    "file": "assets/popup.html-BBKaYZdR.js",
     "name": "popup.html",
     "src": "src/popup/popup.html",
     "isEntry": true,
     "imports": [
-      "_index-COoM7qWS.js",
+      "_index-B8vvOX-5.js",
       "_helpers-CS4C6e_d.js"
     ]
   }
