@@ -25,7 +25,7 @@
     "name": "storage"
   },
   "src/background/service-worker.ts": {
-    "file": "assets/service-worker.ts-DRcIMj3l.js",
+    "file": "assets/service-worker.ts-BGzoA3yQ.js",
     "name": "service-worker.ts",
     "src": "src/background/service-worker.ts",
     "isEntry": true,

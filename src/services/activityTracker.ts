@@ -137,8 +137,20 @@ class ActivityTracker {
 
     this.isPaused = false;
 
-    // Re-capture current active tab
+    // Re-capture current active tab and activity state
     try {
+      // Query current idle state
+      const idleState = await chrome.idle.queryState(this.idleThreshold);
+      this.isUserActive = idleState === 'active';
+
+      // Check if current window has focus
+      const currentWindow = await chrome.windows.getCurrent();
+      if (!currentWindow.focused) {
+        this.isUserActive = false;
+      }
+
+      console.log('[ActivityTracker] Resumed with isUserActive:', this.isUserActive);
+
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
       if (tab && tab.id) {
         await this.handleTabSwitch(tab.id, tab.windowId || 0);
@@ -146,8 +158,6 @@ class ActivityTracker {
     } catch (error) {
       console.error('[ActivityTracker] Resume error:', error);
     }
-
-    console.log('[ActivityTracker] Resumed');
   }
 
   /**
@@ -267,6 +277,8 @@ class ActivityTracker {
     const now = Date.now();
     const totalTimeSeconds = (now - this.currentPageStart) / 1000;
     const idleTimeSeconds = Math.max(0, totalTimeSeconds - this.activeTime);
+
+    console.log(`[ActivityTracker] Finalizing page: totalTime=${totalTimeSeconds.toFixed(1)}s, activeTime=${this.activeTime}s, idleTime=${idleTimeSeconds.toFixed(1)}s, isUserActive=${this.isUserActive}`);
 
     const event: ActivityEvent = {
       eventId: generateEventId(),
@@ -428,6 +440,13 @@ class ActivityTracker {
   // =====================
 
   private startActivityTimer(): void {
+    // Clear any existing timer
+    if (this.activityCheckInterval) {
+      clearInterval(this.activityCheckInterval);
+    }
+
+    console.log('[ActivityTracker] Starting activity timer, isUserActive:', this.isUserActive);
+
     // Check activity every second
     this.activityCheckInterval = setInterval(() => {
       if (this.isPaused || !this.currentTab || !this.currentPageStart) return;
@@ -450,6 +469,19 @@ class ActivityTracker {
 
   private async captureInitialState(): Promise<void> {
     try {
+      // Query current idle state to properly initialize isUserActive
+      const idleState = await chrome.idle.queryState(this.idleThreshold);
+      this.isUserActive = idleState === 'active';
+      console.log('[ActivityTracker] Initial idle state:', idleState, 'isUserActive:', this.isUserActive);
+
+      // Check if current window has focus
+      const currentWindow = await chrome.windows.getCurrent();
+      if (!currentWindow.focused) {
+        this.isUserActive = false;
+        console.log('[ActivityTracker] Browser window not focused, setting isUserActive to false');
+      }
+
+      // Get initial active tab
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
       if (tab && tab.url && (await this.exclusionManager.shouldTrackUrl(tab.url))) {
         // Check incognito
