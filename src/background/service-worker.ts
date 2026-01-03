@@ -92,6 +92,12 @@ async function initializeNewServices() {
       }
     });
 
+    // Set up ACK callback to mark events as synced in storage
+    nativeMessaging.setAckCallback(async (eventIds: string[]) => {
+      const syncedCount = await eventStorage.markEventsSynced(eventIds);
+      console.log(`[ServiceWorker] Marked ${syncedCount} events as synced`);
+    });
+
     // Attempt to connect to desktop app
     nativeMessaging.connect();
 

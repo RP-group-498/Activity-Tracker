@@ -20,6 +20,7 @@ export type ConnectionChangeCallback = (isConnected: boolean) => void;
 export type SessionUpdateCallback = (session: SessionMessage) => void;
 export type ErrorCallback = (error: string) => void;
 export type CommandCallback = (command: 'pause' | 'resume' | 'clear_local') => void;
+export type AckCallback = (eventIds: string[]) => void;
 
 interface ConnectionStatus {
   isConnected: boolean;
@@ -45,6 +46,7 @@ class NativeMessagingService {
   private onConnectionChange: ConnectionChangeCallback | null = null;
   private onError: ErrorCallback | null = null;
   private onCommand: CommandCallback | null = null;
+  private onAck: AckCallback | null = null;
 
   /**
    * Set callback for session updates from desktop app
@@ -72,6 +74,13 @@ class NativeMessagingService {
    */
   setCommandCallback(callback: CommandCallback): void {
     this.onCommand = callback;
+  }
+
+  /**
+   * Set callback for ACK messages (to mark events as synced)
+   */
+  setAckCallback(callback: AckCallback): void {
+    this.onAck = callback;
   }
 
   /**
@@ -138,10 +147,16 @@ class NativeMessagingService {
       case 'ack':
         // Mark events as synced
         const ackMessage = message as AckMessage;
-        if (ackMessage.receivedEventIds) {
+        if (ackMessage.receivedEventIds && ackMessage.receivedEventIds.length > 0) {
+          // Remove from pending acks map
           ackMessage.receivedEventIds.forEach((id) => {
             this.pendingAcks.delete(id);
           });
+          // Notify callback to mark events as synced in storage
+          if (this.onAck) {
+            this.onAck(ackMessage.receivedEventIds);
+          }
+          console.log(`[NativeMsg] ACK received for ${ackMessage.receivedEventIds.length} events`);
         }
         break;
 
