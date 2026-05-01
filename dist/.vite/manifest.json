@@ -1,6 +1,6 @@
 {
   "../../../../../../../@crx/manifest": {
-    "file": "assets/crx-manifest.js-C2i6GJQL.js",
+    "file": "assets/crx-manifest.js-D_LxFNff.js",
     "name": "crx-manifest.js",
     "src": "../../../../../../../@crx/manifest",
     "isEntry": true
@@ -25,7 +25,7 @@
     "name": "storage"
   },
   "src/background/service-worker.ts": {
-    "file": "assets/service-worker.ts-BGzoA3yQ.js",
+    "file": "assets/service-worker.ts-CogusUvc.js",
     "name": "service-worker.ts",
     "src": "src/background/service-worker.ts",
     "isEntry": true,

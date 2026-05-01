@@ -39,11 +39,22 @@ async function initializeNewServices() {
     // Initialize consent manager
     await consentManager.initialize();
 
-    // Check if we have consent
+    // Check if we have consent - auto-grant for research app if not yet decided
     const hasConsent = await consentManager.hasValidConsent();
     if (!hasConsent) {
-      console.log('[ServiceWorker] No consent - new tracking disabled');
-      // Still run legacy tracker for backward compatibility
+      const wasDeclined = await consentManager.wasDeclined();
+      if (!wasDeclined) {
+        // Auto-grant consent for research app (user hasn't explicitly declined)
+        await consentManager.grantConsent({
+          trackBrowsing: true,
+          trackIdleTime: true,
+          trackIncognito: false,
+          shareAnonymousStats: false,
+        });
+        console.log('[ServiceWorker] Auto-granted consent for research tracking');
+      } else {
+        console.log('[ServiceWorker] Consent was declined - tracking disabled');
+      }
     }
 
     // Initialize event storage
@@ -56,6 +67,7 @@ async function initializeNewServices() {
     nativeMessaging.setSessionUpdateCallback((session: SessionMessage) => {
       activityTracker.setSessionId(session.sessionId);
       StorageManager.updateExtensionState({ isConnected: true });
+      StorageManager.setLastError(null); // Clear any stale error from previous disconnects
       console.log('[ServiceWorker] Desktop session started:', session.sessionId);
 
       // Sync any pending events
@@ -65,15 +77,18 @@ async function initializeNewServices() {
     nativeMessaging.setConnectionChangeCallback(async (isConnected: boolean) => {
       await StorageManager.updateExtensionState({ isConnected });
       if (isConnected) {
+        await StorageManager.setLastError(null); // Clear stale errors
         await syncPendingEvents();
       } else {
         activityTracker.setSessionId(null);
       }
     });
 
-    nativeMessaging.setErrorCallback(async (error: string) => {
+    nativeMessaging.setErrorCallback(async (error: string | null) => {
       await StorageManager.setLastError(error);
-      console.error('[ServiceWorker] Native messaging error:', error);
+      if (error) {
+        console.error('[ServiceWorker] Native messaging error:', error);
+      }
     });
 
     nativeMessaging.setCommandCallback(async (command) => {
@@ -106,6 +121,11 @@ async function initializeNewServices() {
 
     // Set up heartbeat (every 60 seconds)
     chrome.alarms.create('heartbeat', { periodInMinutes: 1 });
+
+    // Set up periodic reconnect check (every 2 minutes)
+    // This ensures reconnection even if the service worker was restarted
+    // and in-memory reconnect timers were lost
+    chrome.alarms.create('reconnectDesktop', { periodInMinutes: 2 });
 
     console.log('[ServiceWorker] New services initialized');
   } catch (error) {
@@ -234,6 +254,13 @@ class TabTracker {
       } else if (alarm.name === 'heartbeat') {
         const count = await eventStorage.getPendingCount();
         nativeMessaging.sendHeartbeat(count);
+      } else if (alarm.name === 'reconnectDesktop') {
+        // Periodic reconnect check - handles service worker restarts
+        if (!nativeMessaging.isDesktopConnected()) {
+          console.log('[ServiceWorker] Periodic reconnect check: not connected, attempting...');
+          nativeMessaging.resetReconnectAttempts();
+          nativeMessaging.connect();
+        }
       }
     });
   }

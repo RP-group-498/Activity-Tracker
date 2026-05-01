@@ -18,7 +18,7 @@ const HOST_NAME = 'com.focusapp.monitor';
 
 export type ConnectionChangeCallback = (isConnected: boolean) => void;
 export type SessionUpdateCallback = (session: SessionMessage) => void;
-export type ErrorCallback = (error: string) => void;
+export type ErrorCallback = (error: string | null) => void;
 export type CommandCallback = (command: 'pause' | 'resume' | 'clear_local') => void;
 export type AckCallback = (eventIds: string[]) => void;
 
@@ -35,8 +35,8 @@ class NativeMessagingService {
   private port: chrome.runtime.Port | null = null;
   private isConnected: boolean = false;
   private reconnectAttempts: number = 0;
-  private maxReconnectAttempts: number = 5;
-  private reconnectDelay: number = 2000; // ms
+  private reconnectDelay: number = 2000; // ms base delay
+  private maxReconnectDelay: number = 60000; // ms max delay (60s)
   private messageQueue: ExtensionMessage[] = [];
   private pendingAcks: Map<string, ActivityEvent> = new Map();
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
@@ -63,7 +63,7 @@ class NativeMessagingService {
   }
 
   /**
-   * Set callback for errors
+   * Set error callback
    */
   setErrorCallback(callback: ErrorCallback): void {
     this.onError = callback;
@@ -90,6 +90,16 @@ class NativeMessagingService {
     if (this.isConnected) {
       console.log('[NativeMsg] Already connected');
       return;
+    }
+
+    // If there's a stale port from a previous attempt, clean it up
+    if (this.port) {
+      try {
+        this.port.disconnect();
+      } catch (_) {
+        // ignore
+      }
+      this.port = null;
     }
 
     try {
@@ -140,6 +150,9 @@ class NativeMessagingService {
         if (this.onConnectionChange) {
           this.onConnectionChange(true);
         }
+        if (this.onError) {
+          this.onError(null);
+        }
         // Flush queued messages
         this.flushQueue();
         break;
@@ -157,6 +170,10 @@ class NativeMessagingService {
             this.onAck(ackMessage.receivedEventIds);
           }
           console.log(`[NativeMsg] ACK received for ${ackMessage.receivedEventIds.length} events`);
+        }
+        // Clear any connection errors since we successfully received an ACK
+        if (this.onError) {
+          this.onError(null);
         }
         break;
 
@@ -187,6 +204,7 @@ class NativeMessagingService {
     console.log('[NativeMsg] Disconnected:', error?.message || 'Unknown reason');
 
     this.port = null;
+    const wasConnected = this.isConnected;
     this.isConnected = false;
 
     if (this.onConnectionChange) {
@@ -199,22 +217,22 @@ class NativeMessagingService {
       this.reconnectTimer = null;
     }
 
-    // Attempt reconnect
-    if (this.reconnectAttempts < this.maxReconnectAttempts) {
-      this.reconnectAttempts++;
-      console.log(
-        `[NativeMsg] Reconnect attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts}`
-      );
-      this.reconnectTimer = setTimeout(
-        () => this.connect(),
-        this.reconnectDelay * this.reconnectAttempts
-      );
-    } else {
-      console.error('[NativeMsg] Max reconnect attempts reached');
-      if (this.onError) {
-        this.onError('Desktop app not available. Data will be stored locally.');
-      }
+    // Always attempt reconnect with exponential backoff (never give up)
+    this.reconnectAttempts++;
+    const delay = Math.min(
+      this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1),
+      this.maxReconnectDelay
+    );
+    console.log(
+      `[NativeMsg] Reconnect attempt ${this.reconnectAttempts} in ${delay}ms`
+    );
+
+    // Notify about disconnection only if we were previously connected
+    if (wasConnected && this.onError) {
+      this.onError('Desktop app disconnected. Reconnecting...');
     }
+
+    this.reconnectTimer = setTimeout(() => this.connect(), delay);
   }
 
   /**
