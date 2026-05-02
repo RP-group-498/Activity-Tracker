@@ -42,8 +42,8 @@ export interface ActivityEvent {
   domain: string;
   path: string;
   title: string;
-  activeTime: number; // seconds
-  idleTime: number; // seconds
+  activeTime: number; // milliseconds
+  idleTime: number; // milliseconds
   tabId: number;
   windowId: number;
   isIncognito: boolean;

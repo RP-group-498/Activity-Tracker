@@ -5,53 +5,53 @@
     "src": "../../../../../../../@crx/manifest",
     "isEntry": true
   },
-  "_helpers-CS4C6e_d.js": {
-    "file": "assets/helpers-CS4C6e_d.js",
+  "_helpers-CLPZ2HaE.js": {
+    "file": "assets/helpers-CLPZ2HaE.js",
     "name": "helpers"
   },
-  "_index-B8vvOX-5.js": {
-    "file": "assets/index-B8vvOX-5.js",
+  "_index-D9IMwEA7.css": {
+    "file": "assets/index-D9IMwEA7.css",
+    "src": "_index-D9IMwEA7.css"
+  },
+  "_index-DUl3D_iB.js": {
+    "file": "assets/index-DUl3D_iB.js",
     "name": "index",
     "css": [
-      "assets/index-DVMhFLPF.css"
+      "assets/index-D9IMwEA7.css"
     ]
-  },
-  "_index-DVMhFLPF.css": {
-    "file": "assets/index-DVMhFLPF.css",
-    "src": "_index-DVMhFLPF.css"
   },
   "_storage-BzDfk7a8.js": {
     "file": "assets/storage-BzDfk7a8.js",
     "name": "storage"
   },
   "src/background/service-worker.ts": {
-    "file": "assets/service-worker.ts-CogusUvc.js",
+    "file": "assets/service-worker.ts-BW8J2hi_.js",
     "name": "service-worker.ts",
     "src": "src/background/service-worker.ts",
     "isEntry": true,
     "imports": [
       "_storage-BzDfk7a8.js",
-      "_helpers-CS4C6e_d.js"
+      "_helpers-CLPZ2HaE.js"
     ]
   },
   "src/options/options.html": {
-    "file": "assets/options.html-9a5la2Nh.js",
+    "file": "assets/options.html-ByxFnBz3.js",
     "name": "options.html",
     "src": "src/options/options.html",
     "isEntry": true,
     "imports": [
-      "_index-B8vvOX-5.js",
+      "_index-DUl3D_iB.js",
       "_storage-BzDfk7a8.js"
     ]
   },
   "src/popup/popup.html": {
-    "file": "assets/popup.html-BBKaYZdR.js",
+    "file": "assets/popup.html-B0FLxfZh.js",
     "name": "popup.html",
     "src": "src/popup/popup.html",
     "isEntry": true,
     "imports": [
-      "_index-B8vvOX-5.js",
-      "_helpers-CS4C6e_d.js"
+      "_index-DUl3D_iB.js",
+      "_helpers-CLPZ2HaE.js"
     ]
   }
 }
