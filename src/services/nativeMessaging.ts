@@ -12,6 +12,7 @@ import {
   CommandMessage,
   DesktopMessage,
   ExtensionMessage,
+  HeartbeatMessage,
 } from '../types';
 
 const HOST_NAME = 'com.focusapp.monitor';
@@ -291,11 +292,12 @@ class NativeMessagingService {
   /**
    * Send heartbeat to desktop app
    */
-  sendHeartbeat(pendingCount: number): boolean {
+  sendHeartbeat(pendingCount: number, currentActivity?: HeartbeatMessage['currentActivity']): boolean {
     return this.send({
       type: 'heartbeat',
       timestamp: new Date().toISOString(),
       pendingEvents: pendingCount,
+      currentActivity,
     });
   }
 

@@ -59,6 +59,8 @@ class ActivityTracker {
   // Idle tracking
   private idleThreshold: number = 60; // seconds
   private lastActivityTime: number = Date.now();
+  private lastActiveTick: number = Date.now();
+  private lastProcessedUrl: string | null = null;
   private activityCheckInterval: ReturnType<typeof setInterval> | null = null;
 
   // Session from desktop app (null if disconnected)
@@ -189,7 +191,10 @@ class ActivityTracker {
     // Tab updated (URL or title changed)
     chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
       if (this.isPaused || !(await this.shouldTrack())) return;
-      if (changeInfo.status === 'complete' && this.currentTab?.id === tabId) {
+      
+      // Handle page load (status change) or title updates (crucial for SPAs like YouTube)
+      if ((changeInfo.status === 'complete' || changeInfo.title) && this.currentTab?.id === tabId) {
+        console.log(`[ActivityTracker] Tab updated: ${tabId}, status=${changeInfo.status}, title=${changeInfo.title}`);
         await this.handlePageLoad(tab);
       }
     });
@@ -242,20 +247,44 @@ class ActivityTracker {
     
     const sanitizedUrl = sanitizeUrl(tab.url);
 
+    // Skip if we just processed this exact URL on this tab (prevents duplicate SPA events)
+    if (this.lastProcessedUrl === sanitizedUrl && this.currentTab?.id === tab.id) {
+      if (this.currentTab) {
+        this.currentTab.title = tab.title || this.currentTab.title;
+      }
+      return;
+    }
+
     // If URL changed on current tab, treat as new page
     if (this.currentTab && sanitizedUrl !== this.currentTab.url) {
       console.log(`[ActivityTracker] Page change detected: ${this.currentTab.url} -> ${sanitizedUrl}`);
+      
+      // Before finalizing, check if the current title is still the generic one or empty
+      // Some SPAs update the title *after* the URL change.
+      // If we are about to start a new page, the OLD page should keep its current title.
       await this.finalizeCurrentPage();
 
       // Check if new URL is trackable
       if (await this.exclusionManager.shouldTrackUrl(tab.url)) {
-        this.startNewPage(tab);
+        // Special handling for YouTube: the title might still be the old one
+        if (sanitizedUrl.includes('youtube.com/watch')) {
+          // If the title still contains the old title or is "YouTube", we might need to wait
+          // But instead of blocking, we'll start and let onUpdated fix it later.
+          // However, we capture the most fresh title possible here.
+          this.startNewPage(tab);
+        } else {
+          this.startNewPage(tab);
+        }
       } else {
         this.currentTab = null;
+        this.lastProcessedUrl = null;
       }
     } else if (this.currentTab) {
       // Just update title if it changed
-      this.currentTab.title = tab.title || '';
+      if (tab.title && tab.title !== this.currentTab.title) {
+        console.log(`[ActivityTracker] Title update for ${this.currentTab.domain}: ${this.currentTab.title} -> ${tab.title}`);
+        this.currentTab.title = tab.title;
+      }
     }
   }
 
@@ -272,6 +301,8 @@ class ActivityTracker {
     this.currentPageStart = Date.now();
     this.activeTime = 0;
     this.lastActivityTime = Date.now();
+    this.lastActiveTick = Date.now();
+    this.lastProcessedUrl = this.currentTab.url;
 
     console.log('[ActivityTracker] Started tracking:', this.currentTab.domain);
   }
@@ -283,10 +314,20 @@ class ActivityTracker {
     if (!tab || !startTime) return;
 
     const now = Date.now();
-    const totalTimeSeconds = (now - startTime) / 1000;
-    const idleTimeSeconds = Math.max(0, totalTimeSeconds - this.activeTime);
+    const totalTimeMs = now - startTime;
+    
+    // Ignore extremely short events with no active time (e.g., rapid tab switching)
+    // Minimum 1 second of total time OR some active time
+    if (totalTimeMs < 1000 && this.activeTime < 500) {
+      console.log(`[ActivityTracker] Skipping brief event: ${tab.domain} (${totalTimeMs}ms)`);
+      this.currentPageStart = null;
+      this.activeTime = 0;
+      return;
+    }
 
-    console.log(`[ActivityTracker] Finalizing page: ${tab.domain}, totalTime=${totalTimeSeconds.toFixed(1)}s, activeTime=${this.activeTime}s`);
+    const idleTimeMs = Math.max(0, totalTimeMs - this.activeTime);
+
+    console.log(`[ActivityTracker] Finalizing page: ${tab.domain}, totalTime=${(totalTimeMs/1000).toFixed(1)}s, activeTime=${(this.activeTime/1000).toFixed(1)}s`);
 
     const event: ActivityEvent = {
       eventId: generateEventId(),
@@ -300,8 +341,8 @@ class ActivityTracker {
       domain: tab.domain,
       path: tab.path,
       title: tab.title,
-      activeTime: Math.round(this.activeTime * 1000),
-      idleTime: Math.round(idleTimeSeconds * 1000),
+      activeTime: Math.round(this.activeTime),
+      idleTime: Math.round(idleTimeMs),
       tabId: tab.id,
       windowId: tab.windowId,
       isIncognito: tab.isIncognito,
@@ -472,16 +513,24 @@ class ActivityTracker {
 
     console.log('[ActivityTracker] Starting activity timer, isUserActive:', this.isUserActive);
 
-    // Check activity every second
+    // Check activity every 500ms for better precision
     this.activityCheckInterval = setInterval(() => {
-      if (this.isPaused || !this.currentTab || !this.currentPageStart) return;
+      if (this.isPaused || !this.currentTab || !this.currentPageStart) {
+        this.lastActiveTick = Date.now();
+        return;
+      }
+
+      const now = Date.now();
+      const delta = now - this.lastActiveTick;
 
       if (this.isUserActive) {
-        // Increment active time
-        this.activeTime += 1;
-        this.lastActivityTime = Date.now();
+        // Increment active time in milliseconds
+        this.activeTime += delta;
+        this.lastActivityTime = now;
       }
-    }, 1000);
+      
+      this.lastActiveTick = now;
+    }, 500);
   }
 
   // =====================

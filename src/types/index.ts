@@ -184,6 +184,12 @@ export interface HeartbeatMessage {
   type: 'heartbeat';
   timestamp: string;
   pendingEvents: number;
+  currentActivity?: {
+    url: string;
+    domain: string;
+    title: string;
+    activeTime: number;
+  };
 }
 
 export type ExtensionMessage = ActivityBatchMessage | ConnectMessage | HeartbeatMessage;

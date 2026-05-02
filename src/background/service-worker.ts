@@ -117,7 +117,7 @@ async function initializeNewServices() {
     nativeMessaging.connect();
 
     // Set up periodic sync (every 30 seconds)
-    chrome.alarms.create('syncEvents', { periodInMinutes: 0.5 });
+    chrome.alarms.create('syncEvents', { periodInMinutes: 0.16 }); // ~10 seconds
 
     // Set up heartbeat (every 60 seconds)
     chrome.alarms.create('heartbeat', { periodInMinutes: 1 });
@@ -253,7 +253,8 @@ class TabTracker {
         await syncPendingEvents();
       } else if (alarm.name === 'heartbeat') {
         const count = await eventStorage.getPendingCount();
-        nativeMessaging.sendHeartbeat(count);
+        const status = activityTracker.getStatus();
+        nativeMessaging.sendHeartbeat(count, status.currentPage || undefined);
       } else if (alarm.name === 'reconnectDesktop') {
         // Periodic reconnect check - handles service worker restarts
         if (!nativeMessaging.isDesktopConnected()) {

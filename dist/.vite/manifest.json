@@ -9,15 +9,15 @@
     "file": "assets/helpers-CLPZ2HaE.js",
     "name": "helpers"
   },
-  "_index-D9IMwEA7.css": {
-    "file": "assets/index-D9IMwEA7.css",
-    "src": "_index-D9IMwEA7.css"
+  "_index-Y_00ddA0.css": {
+    "file": "assets/index-Y_00ddA0.css",
+    "src": "_index-Y_00ddA0.css"
   },
-  "_index-DUl3D_iB.js": {
-    "file": "assets/index-DUl3D_iB.js",
+  "_index-lYcUBwzp.js": {
+    "file": "assets/index-lYcUBwzp.js",
     "name": "index",
     "css": [
-      "assets/index-D9IMwEA7.css"
+      "assets/index-Y_00ddA0.css"
     ]
   },
   "_storage-BzDfk7a8.js": {
@@ -25,7 +25,7 @@
     "name": "storage"
   },
   "src/background/service-worker.ts": {
-    "file": "assets/service-worker.ts-BW8J2hi_.js",
+    "file": "assets/service-worker.ts-CRSR1y_F.js",
     "name": "service-worker.ts",
     "src": "src/background/service-worker.ts",
     "isEntry": true,
@@ -35,22 +35,22 @@
     ]
   },
   "src/options/options.html": {
-    "file": "assets/options.html-ByxFnBz3.js",
+    "file": "assets/options.html-0-X8ZJH8.js",
     "name": "options.html",
     "src": "src/options/options.html",
     "isEntry": true,
     "imports": [
-      "_index-DUl3D_iB.js",
+      "_index-lYcUBwzp.js",
       "_storage-BzDfk7a8.js"
     ]
   },
   "src/popup/popup.html": {
-    "file": "assets/popup.html-B0FLxfZh.js",
+    "file": "assets/popup.html-CWZzIBJT.js",
     "name": "popup.html",
     "src": "src/popup/popup.html",
     "isEntry": true,
     "imports": [
-      "_index-DUl3D_iB.js",
+      "_index-lYcUBwzp.js",
       "_helpers-CLPZ2HaE.js"
     ]
   }
