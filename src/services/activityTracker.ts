@@ -238,8 +238,13 @@ class ActivityTracker {
   }
 
   private async handlePageLoad(tab: chrome.tabs.Tab): Promise<void> {
+    if (!tab.url) return;
+    
+    const sanitizedUrl = sanitizeUrl(tab.url);
+
     // If URL changed on current tab, treat as new page
-    if (this.currentTab && tab.url && tab.url !== this.currentTab.url) {
+    if (this.currentTab && sanitizedUrl !== this.currentTab.url) {
+      console.log(`[ActivityTracker] Page change detected: ${this.currentTab.url} -> ${sanitizedUrl}`);
       await this.finalizeCurrentPage();
 
       // Check if new URL is trackable
@@ -272,43 +277,48 @@ class ActivityTracker {
   }
 
   private async finalizeCurrentPage(): Promise<void> {
-    if (!this.currentTab || !this.currentPageStart) return;
+    const tab = this.currentTab;
+    const startTime = this.currentPageStart;
+    
+    if (!tab || !startTime) return;
 
     const now = Date.now();
-    const totalTimeSeconds = (now - this.currentPageStart) / 1000;
+    const totalTimeSeconds = (now - startTime) / 1000;
     const idleTimeSeconds = Math.max(0, totalTimeSeconds - this.activeTime);
 
-    console.log(`[ActivityTracker] Finalizing page: totalTime=${totalTimeSeconds.toFixed(1)}s, activeTime=${this.activeTime}s, idleTime=${idleTimeSeconds.toFixed(1)}s, isUserActive=${this.isUserActive}`);
+    console.log(`[ActivityTracker] Finalizing page: ${tab.domain}, totalTime=${totalTimeSeconds.toFixed(1)}s, activeTime=${this.activeTime}s`);
 
     const event: ActivityEvent = {
       eventId: generateEventId(),
       sessionId: this.sessionId,
       source: 'browser',
       activityType: 'webpage',
-      timestamp: new Date(this.currentPageStart).toISOString(),
-      startTime: new Date(this.currentPageStart).toISOString(),
+      timestamp: new Date(startTime).toISOString(),
+      startTime: new Date(startTime).toISOString(),
       endTime: new Date(now).toISOString(),
-      url: this.currentTab.url,
-      domain: this.currentTab.domain,
-      path: this.currentTab.path,
-      title: this.currentTab.title,
-      activeTime: Math.round(this.activeTime),
-      idleTime: Math.round(idleTimeSeconds),
-      tabId: this.currentTab.id,
-      windowId: this.currentTab.windowId,
-      isIncognito: this.currentTab.isIncognito,
+      url: tab.url,
+      domain: tab.domain,
+      path: tab.path,
+      title: tab.title,
+      activeTime: Math.round(this.activeTime * 1000),
+      idleTime: Math.round(idleTimeSeconds * 1000),
+      tabId: tab.id,
+      windowId: tab.windowId,
+      isIncognito: tab.isIncognito,
       synced: false,
       syncAttempts: 0,
     };
 
-    await this.eventStorage.bufferEvent(event);
-    console.log(
-      `[ActivityTracker] Finalized: ${this.currentTab.domain}, active: ${Math.round(this.activeTime)}s`
-    );
-
-    // Reset state
+    // Reset state before await to prevent double-finalization
     this.currentPageStart = null;
     this.activeTime = 0;
+    // We only set currentTab to null if it's still the same one
+    if (this.currentTab === tab) {
+      this.currentTab = null;
+    }
+
+    await this.eventStorage.bufferEvent(event);
+    console.log(`[ActivityTracker] Finalized and buffered: ${tab.domain}`);
   }
 
   private async recordTabSwitch(
@@ -344,6 +354,21 @@ class ActivityTracker {
       if (details.frameId !== 0) return;
 
       // This catches URL changes that tabs.onUpdated might miss
+      if (this.currentTab?.id === details.tabId) {
+        try {
+          const tab = await chrome.tabs.get(details.tabId);
+          await this.handlePageLoad(tab);
+        } catch {
+          // Tab may have been closed
+        }
+      }
+    });
+
+    // Handle SPA (Single Page App) navigations like YouTube video changes
+    chrome.webNavigation.onHistoryStateUpdated.addListener(async (details) => {
+      if (this.isPaused || !(await this.shouldTrack())) return;
+      if (details.frameId !== 0) return;
+
       if (this.currentTab?.id === details.tabId) {
         try {
           const tab = await chrome.tabs.get(details.tabId);

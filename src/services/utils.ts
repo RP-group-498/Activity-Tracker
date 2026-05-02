@@ -62,7 +62,28 @@ export function getTimestamp(): string {
 export function sanitizeUrl(url: string): string {
   try {
     const urlObj = new URL(url);
-    return `${urlObj.protocol}//${urlObj.hostname}${urlObj.pathname}`;
+    const hostname = urlObj.hostname.toLowerCase();
+    
+    // Preserve essential parameters for classification and activity separation
+    const paramsToKeep = new Set<string>();
+    if (hostname.includes('youtube.com')) {
+      paramsToKeep.add('v');
+      paramsToKeep.add('list');
+    } else if (hostname.includes('google.com')) {
+      paramsToKeep.add('q');
+    }
+    
+    const newSearchParams = new URLSearchParams();
+    urlObj.searchParams.forEach((value, key) => {
+      if (paramsToKeep.has(key)) {
+        newSearchParams.set(key, value);
+      }
+    });
+    
+    const searchStr = newSearchParams.toString();
+    const searchPart = searchStr ? `?${searchStr}` : '';
+    
+    return `${urlObj.protocol}//${urlObj.hostname}${urlObj.pathname}${searchPart}`;
   } catch {
     return url;
   }
